@@ -1,4 +1,5 @@
 import type { AiEnv } from "./client";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 /**
  * Build an AiEnv from the runtime environment.
@@ -9,10 +10,15 @@ import type { AiEnv } from "./client";
  * a 503-style error otherwise.
  */
 export function getAiEnv(): AiEnv {
+  let AI: AiEnv["AI"] | undefined;
+  try {
+    AI = (getCloudflareContext().env as unknown as { AI?: AiEnv["AI"] }).AI;
+  } catch {
+    AI = (process.env as unknown as { AI?: AiEnv["AI"] }).AI;
+  }
+
   return {
-    // The Cloudflare AI binding is injected by the runtime. Cast is unavoidable
-    // because Node's process.env types don't model bindings.
-    AI: (process.env as unknown as { AI?: AiEnv["AI"] }).AI,
+    AI,
     OLLAMA_HOST: process.env.OLLAMA_HOST,
     OLLAMA_MODEL: process.env.OLLAMA_MODEL,
   };
