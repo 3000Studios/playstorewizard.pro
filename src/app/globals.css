@@ -1,0 +1,183 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-serif: "Instrument Serif", "Iowan Old Style", "Apple Garamond", Georgia, serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+
+    --grad-aurora: linear-gradient(135deg, #6366f1 0%, #8b5cf6 35%, #d946ef 75%, #f43f5e 100%);
+    --grad-emerald: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    background: #07070b;
+    color: #f6f6f8;
+    font-family: var(--font-display);
+    font-feature-settings: "ss01", "ss02", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-image:
+      radial-gradient(1200px 800px at 15% -10%, rgba(99,102,241,0.12), transparent 60%),
+      radial-gradient(900px 700px at 90% 10%, rgba(217,70,239,0.10), transparent 60%),
+      radial-gradient(800px 800px at 50% 100%, rgba(56,189,248,0.08), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* Focus rings — high contrast for accessibility */
+  :focus-visible {
+    outline: 2px solid #a5b4fc;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection { background: rgba(139, 92, 246, 0.4); color: white; }
+
+  /* Smoother scroll, respecting motion preferences */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Aurora text gradient */
+  .text-aurora {
+    background: var(--grad-aurora);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Italic serif accent — "the magic word" treatment */
+  .accent-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Grain overlay - applied via wrapper class */
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* Glass card */
+  .glass {
+    background:
+      linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0)) padding-box,
+      rgba(20, 20, 29, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Scroll reveal — works with the motion/reveal component */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hover lift */
+  .hover-lift {
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -8px rgba(99, 102, 241, 0.35);
+  }
+
+  /* Click feedback */
+  .click-scale {
+    transition: transform 100ms ease-out;
+  }
+  .click-scale:active {
+    transform: scale(0.97);
+  }
+
+  /* Shimmer skeleton */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(255,255,255,0.12) 50%,
+      rgba(255,255,255,0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* Prose tweaks for guide pages */
+  .prose-guide {
+    @apply prose prose-invert max-w-none;
+  }
+  .prose-guide h1 {
+    @apply font-display tracking-tight;
+  }
+  .prose-guide h2 {
+    @apply font-display tracking-tight border-t border-border pt-8 mt-12;
+  }
+  .prose-guide h3 {
+    @apply font-display tracking-tight;
+  }
+  .prose-guide a {
+    @apply text-indigo-300 hover:text-indigo-200 underline decoration-indigo-500/40 underline-offset-4 hover:decoration-indigo-400;
+  }
+  .prose-guide code:not(pre code) {
+    @apply text-indigo-200 bg-bg-3 px-1.5 py-0.5 rounded text-[0.9em] font-mono;
+  }
+  .prose-guide code::before, .prose-guide code::after { content: none; }
+  .prose-guide blockquote {
+    @apply not-italic border-l-4 border-brand-indigo bg-bg-2/50 py-1 px-4 rounded-r-lg;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Mask-image utilities for fading edges */
+  .mask-fade-y {
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  }
+}
+
+/* Performance: contain layout/paint on common containers */
+section { contain: layout style; }

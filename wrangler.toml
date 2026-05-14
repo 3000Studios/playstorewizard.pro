@@ -1,0 +1,26 @@
+name = "playstorewizard-pro"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# Bindings configured via the Cloudflare Pages dashboard (or the deploy script):
+#   AI               - Workers AI binding (free tier)
+#   LICENSE_KV       - KV namespace for license revocation
+#
+# Encrypted secrets (set via API or `wrangler pages secret put`):
+#   STRIPE_SECRET_KEY            - Stripe sk_live_...
+#   STRIPE_WEBHOOK_SECRET        - Stripe whsec_...
+#   STRIPE_PRICE_PRO_MONTHLY     - (optional) pre-created Price ID
+#   STRIPE_PRICE_PRO_YEARLY      - (optional)
+#   STRIPE_PRICE_PRO_LIFETIME    - (optional)
+#   STRIPE_PRICE_STUDIO_MONTHLY  - (optional)
+#   STRIPE_PRICE_STUDIO_YEARLY   - (optional)
+#   STRIPE_PRICE_STUDIO_LIFETIME - (optional)
+#   PAYPAL_CLIENT_ID             - PayPal REST app client ID
+#   PAYPAL_CLIENT_SECRET         - PayPal REST app secret
+#   PAYPAL_ENV                   - "live" or "sandbox"
+#   GOOGLE_SA_JSON               - (optional) Play Developer API service-account JSON
+#
+# Public (non-encrypted) env vars:
+#   NEXT_PUBLIC_SITE_URL          - https://playstorewizard.pro
+#   NEXT_PUBLIC_ADSENSE_CLIENT_ID - ca-pub-XXXXXXXXXXXXXXXX once AdSense approves

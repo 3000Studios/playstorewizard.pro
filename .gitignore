@@ -1,0 +1,41 @@
+# deps
+node_modules
+.pnpm-store
+
+# next
+.next/
+out/
+
+# cloudflare
+.vercel/
+.wrangler/
+.dev.vars
+
+# env
+.env
+.env.local
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# secrets
+google-sa-*.json
+*.aab
+*.apk
+*.keystore
+*.jks
+
+# logs
+*.log
