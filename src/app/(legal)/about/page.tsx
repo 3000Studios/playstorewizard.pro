@@ -5,7 +5,7 @@ import { buildBreadcrumbLd, pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "About",
-  description: "Playstore Wizard is built by 3000Studios — an indie developer studio shipping mobile apps and helping others do the same.",
+  description: "Playstore Wizard is built by Mr. J. Swain at 3000 Studios — an indie developer studio shipping mobile apps and helping others do the same.",
   path: "/about",
 });
 
@@ -25,7 +25,10 @@ export default function AboutPage() {
           <p>Every indie developer goes through the same Day-One experience: open Google Play Console, see thirteen tabs and a hundred form fields, lose two hours, miss a requirement, get rejected, and start over. Then they discover the 14-day closed-testing rule. Then they discover the Data Safety form. Then they realize their target API level is too low. Each of those discoveries adds days, sometimes weeks, to a launch.</p>
           <p>Playstore Wizard is what we wished existed when we shipped our first app — a single guided flow that knows every current Google Play policy and applies it as you go. We built it for ourselves first, then for the developers we kept meeting at meetups who described the exact same pain.</p>
           <h2>Who&apos;s behind it</h2>
-          <p>3000Studios is an indie developer studio based in Acworth, Georgia. We ship mobile apps, automation tools, and developer infrastructure. Everything we build follows a single rule: production-ready or don&apos;t ship it.</p>
+          <p>Playstore Wizard is built and maintained by <strong>Mr. J. Swain</strong>, founder of <strong>3000 Studios</strong> — an indie developer studio based in Acworth, Georgia. 3000 Studios ships mobile apps, automation tools, and developer infrastructure. Everything we build follows a single rule: production-ready or don&apos;t ship it.</p>
+          <p className="text-sm text-text-muted">
+            © {new Date().getFullYear()} Mr. J. Swain · 3000 Studios. All rights reserved. The Playstore Wizard name, brand, source code, and content are the original work of Mr. J. Swain and 3000 Studios. Reproduction, redistribution, or use of this material to operate a competing service is prohibited without prior written permission.
+          </p>
           <h2>How we make money</h2>
           <p>The Free tier is genuinely free, forever — one app, no expiry, no credit card. We make money from the Pro tier (indie developers shipping multiple apps), the Studio tier (agencies managing client apps), and modest ad revenue on our content pages. We never sell or share user data, and we never use a free user as a stepping stone to extract a payment.</p>
           <h2>What we promise</h2>

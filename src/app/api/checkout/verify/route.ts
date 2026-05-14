@@ -3,8 +3,6 @@ import { z } from "zod";
 import { getStripe } from "@/lib/payments/stripe";
 import { signLicense, type License, type Tier } from "@/lib/pro/tiers";
 
-export const runtime = "edge";
-
 const BodySchema = z.object({
   provider: z.enum(["stripe", "paypal"]),
   sessionId: z.string().min(1).max(300).optional(),

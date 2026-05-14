@@ -47,6 +47,20 @@ export function buildOrganizationLd() {
     url: SITE_URL,
     description: SITE_TAGLINE,
     logo: `${SITE_URL}/icons/icon-512.png`,
+    founder: {
+      "@type": "Person",
+      name: "Mr. J. Swain",
+    },
+    parentOrganization: {
+      "@type": "Organization",
+      name: "3000 Studios",
+      url: "https://github.com/3000Studios",
+    },
+    copyrightHolder: {
+      "@type": "Person",
+      name: "Mr. J. Swain",
+    },
+    copyrightYear: new Date().getFullYear(),
   };
 }
 
@@ -69,6 +83,19 @@ export function buildSoftwareAppLd() {
     },
     description: SITE_TAGLINE,
     url: SITE_URL,
+    author: {
+      "@type": "Person",
+      name: "Mr. J. Swain",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "3000 Studios",
+    },
+    copyrightHolder: {
+      "@type": "Person",
+      name: "Mr. J. Swain",
+    },
+    copyrightYear: new Date().getFullYear(),
   };
 }
 

@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/payments/stripe";
 import type Stripe from "stripe";
 
-export const runtime = "edge";
-
 /**
  * Stripe webhook handler.
  *

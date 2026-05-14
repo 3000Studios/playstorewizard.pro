@@ -56,9 +56,9 @@ export function Footer() {
               A guided publishing studio for Google Play. Compliance, listings, and submission — done right the first time.
             </p>
             <p className="text-xs text-text-dim mt-6 font-mono">
-              © {new Date().getFullYear()} 3000Studios.
+              © {new Date().getFullYear()} Mr. J. Swain · 3000 Studios.
               <br />
-              Not affiliated with Google LLC.
+              All rights reserved. Not affiliated with Google LLC.
             </p>
           </div>
 

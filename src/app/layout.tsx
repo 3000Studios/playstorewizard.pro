@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     "android compliance",
     "play store wizard",
   ],
-  authors: [{ name: "3000Studios" }],
-  creator: "3000Studios",
-  publisher: "3000Studios",
+  authors: [{ name: "Mr. J. Swain" }, { name: "3000 Studios" }],
+  creator: "Mr. J. Swain (3000 Studios)",
+  publisher: "3000 Studios",
   formatDetection: { email: false, telephone: false, address: false },
   alternates: { canonical: SITE_URL },
   openGraph: {
@@ -68,6 +68,10 @@ export const metadata: Metadata = {
     apple: "/icons/icon-192.png",
   },
   other: {
+    "copyright": `© ${new Date().getFullYear()} Mr. J. Swain · 3000 Studios. All rights reserved.`,
+    "rights-owner": "Mr. J. Swain (3000 Studios)",
+    "designer": "Mr. J. Swain",
+    "owner": "3000 Studios",
     ...(ADSENSE_CLIENT_ID && ADSENSE_CLIENT_ID !== "ca-pub-0000000000000000"
       ? { "google-adsense-account": ADSENSE_CLIENT_ID }
       : {}),

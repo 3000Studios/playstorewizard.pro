@@ -21,7 +21,7 @@ export default function DisclaimerPage() {
         </Reveal>
         <div className="prose-guide mt-10">
           <h2>Not affiliated with Google</h2>
-          <p>Playstore Wizard is an independent product built by 3000Studios. We are not affiliated with, endorsed by, or sponsored by Google LLC. &quot;Google Play&quot;, &quot;Play Store&quot;, &quot;Play Console&quot;, and &quot;Android&quot; are trademarks of Google LLC. We use these names solely to describe the platform our tool helps you publish to.</p>
+          <p>Playstore Wizard is an independent product built by Mr. J. Swain at 3000 Studios. We are not affiliated with, endorsed by, or sponsored by Google LLC. &quot;Google Play&quot;, &quot;Play Store&quot;, &quot;Play Console&quot;, and &quot;Android&quot; are trademarks of Google LLC. We use these names solely to describe the platform our tool helps you publish to.</p>
           <h2>No guarantee of approval</h2>
           <p>The compliance check in this tool reflects our best understanding of current Google Play policies. Google retains sole discretion over policy enforcement and Play Store approval decisions. A &quot;ready to submit&quot; result does not guarantee approval. We strongly recommend reading Google&apos;s <a href="https://play.google.com/about/developer-content-policy/">Developer Program Policies</a> in full before submitting any app.</p>
           <h2>Not legal advice</h2>

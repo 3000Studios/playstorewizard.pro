@@ -3,8 +3,6 @@ import { z } from "zod";
 import { createPaypalOrder } from "@/lib/payments/paypal";
 import { TIERS, ANNUAL_PRICES, LIFETIME_PRICES } from "@/lib/pro/tiers";
 
-export const runtime = "edge";
-
 const BodySchema = z.object({
   tier: z.enum(["pro", "studio"]),
   billing: z.enum(["monthly", "yearly", "lifetime"]),
