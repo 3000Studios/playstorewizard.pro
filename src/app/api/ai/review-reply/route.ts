@@ -3,7 +3,6 @@ import { z } from "zod";
 import { generateReviewReply } from "@/lib/ai/review-reply";
 import { getAiEnv } from "@/lib/ai/env";
 
-export const runtime = "edge";
 
 const BodySchema = z.object({
   review: z.object({

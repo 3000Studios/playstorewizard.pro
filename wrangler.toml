@@ -1,26 +1,38 @@
 name = "playstorewizard-pro"
-compatibility_date = "2025-01-01"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static"
+main = ".open-next/worker.js"
+compatibility_date = "2026-05-14"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+workers_dev = true
+preview_urls = true
 
-# Bindings configured via the Cloudflare Pages dashboard (or the deploy script):
-#   AI               - Workers AI binding (free tier)
-#   LICENSE_KV       - KV namespace for license revocation
+routes = [
+  { pattern = "playstorewizard.pro/*", zone_name = "playstorewizard.pro" }
+]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "playstorewizard-pro"
+
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://playstorewizard.pro"
+NEXT_PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-5800977493749262"
+PAYPAL_ENV = "live"
+
+# Required production secrets, set with Wrangler or Cloudflare dashboard:
+# STRIPE_SECRET_KEY
+# STRIPE_WEBHOOK_SECRET
+# PAYPAL_CLIENT_ID
+# PAYPAL_CLIENT_SECRET
 #
-# Encrypted secrets (set via API or `wrangler pages secret put`):
-#   STRIPE_SECRET_KEY            - Stripe sk_live_...
-#   STRIPE_WEBHOOK_SECRET        - Stripe whsec_...
-#   STRIPE_PRICE_PRO_MONTHLY     - (optional) pre-created Price ID
-#   STRIPE_PRICE_PRO_YEARLY      - (optional)
-#   STRIPE_PRICE_PRO_LIFETIME    - (optional)
-#   STRIPE_PRICE_STUDIO_MONTHLY  - (optional)
-#   STRIPE_PRICE_STUDIO_YEARLY   - (optional)
-#   STRIPE_PRICE_STUDIO_LIFETIME - (optional)
-#   PAYPAL_CLIENT_ID             - PayPal REST app client ID
-#   PAYPAL_CLIENT_SECRET         - PayPal REST app secret
-#   PAYPAL_ENV                   - "live" or "sandbox"
-#   GOOGLE_SA_JSON               - (optional) Play Developer API service-account JSON
-#
-# Public (non-encrypted) env vars:
-#   NEXT_PUBLIC_SITE_URL          - https://playstorewizard.pro
-#   NEXT_PUBLIC_ADSENSE_CLIENT_ID - ca-pub-XXXXXXXXXXXXXXXX once AdSense approves
+# Optional:
+# STRIPE_PRICE_PRO_MONTHLY
+# STRIPE_PRICE_PRO_YEARLY
+# STRIPE_PRICE_PRO_LIFETIME
+# STRIPE_PRICE_STUDIO_MONTHLY
+# STRIPE_PRICE_STUDIO_YEARLY
+# STRIPE_PRICE_STUDIO_LIFETIME
+# GOOGLE_SA_JSON

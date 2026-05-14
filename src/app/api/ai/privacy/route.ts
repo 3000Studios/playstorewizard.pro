@@ -6,7 +6,6 @@ import {
   type DataPurpose,
 } from "@/lib/ai/privacy";
 
-export const runtime = "edge";
 
 const DATA_TYPE = z.enum([
   "name", "email", "phone", "address", "user-ids", "device-ids",

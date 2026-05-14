@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { parseBundle } from "@/lib/bundle/parser";
 
-export const runtime = "edge";
 export const maxDuration = 30;
 
 /**

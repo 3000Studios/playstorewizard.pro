@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { calculateFees } from "@/lib/pricing/calculator";
 
-export const runtime = "edge";
 
 const BodySchema = z.object({
   regime: z.enum(["current", "post-june-2026"]).default("current"),

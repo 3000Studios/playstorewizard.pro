@@ -8,7 +8,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
 
-const ADSENSE_CLIENT_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+const ADSENSE_CLIENT_ID =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-5800977493749262";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

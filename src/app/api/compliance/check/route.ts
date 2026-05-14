@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { checkCompliance } from "@/lib/compliance/checker";
 
-export const runtime = "edge";
 
 const BodySchema = z.object({
   targetSdk: z.number().int().optional(),

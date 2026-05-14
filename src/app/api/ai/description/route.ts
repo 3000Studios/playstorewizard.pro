@@ -3,7 +3,6 @@ import { z } from "zod";
 import { generateDescription } from "@/lib/ai/description";
 import { getAiEnv } from "@/lib/ai/env";
 
-export const runtime = "edge";
 
 const BodySchema = z.object({
   appName: z.string().min(1).max(120),

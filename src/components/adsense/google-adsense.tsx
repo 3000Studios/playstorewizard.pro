@@ -3,7 +3,8 @@
 import Script from "next/script";
 import * as React from "react";
 
-const ADSENSE_CLIENT_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+const ADSENSE_CLIENT_ID =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-5800977493749262";
 
 /**
  * Head script that loads the AdSense library. Mount once in the root layout.
