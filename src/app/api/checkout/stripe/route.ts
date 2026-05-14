@@ -4,7 +4,7 @@ import { getStripe, STRIPE_PRICE_IDS } from "@/lib/payments/stripe";
 import { TIERS, ANNUAL_PRICES, LIFETIME_PRICES } from "@/lib/pro/tiers";
 import { SITE_URL } from "@/lib/utils";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 const BodySchema = z.object({
   tier: z.enum(["pro", "studio"]),

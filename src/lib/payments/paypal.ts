@@ -20,7 +20,8 @@ async function getAccessToken(): Promise<string> {
   if (!clientId || !clientSecret) {
     throw new Error("PayPal credentials are not configured (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET).");
   }
-  const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+  // btoa is available in Edge/browser/Node 16+; Buffer is NOT available in Edge runtime.
+  const auth = btoa(`${clientId}:${clientSecret}`);
   const res = await fetch(`${paypalBase()}/v1/oauth2/token`, {
     method: "POST",
     headers: {

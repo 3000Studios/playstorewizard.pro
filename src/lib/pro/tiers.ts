@@ -91,7 +91,7 @@ export const TIERS: TierDef[] = [
   {
     id: "pro",
     name: "Pro",
-    priceUsd: 14.99,
+    priceUsd: 9.99,
     billing: "monthly",
     description: "Built for indie developers shipping multiple apps.",
     features: [
@@ -164,13 +164,13 @@ export const TIERS: TierDef[] = [
 
 // Alternative annual prices, with a 17% discount.
 export const ANNUAL_PRICES: Partial<Record<Tier, number>> = {
-  pro: 149,    // ~$12.42/mo
+  pro: 99,     // ~$8.25/mo (17% off monthly)
   studio: 499, // ~$41.58/mo
 };
 
 // One-time lifetime license option (early-bird strategy).
 export const LIFETIME_PRICES: Partial<Record<Tier, number>> = {
-  pro: 249,
+  pro: 199,
   studio: 799,
 };
 
