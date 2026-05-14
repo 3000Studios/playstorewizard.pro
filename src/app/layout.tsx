@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import "./globals.css";
 import { TopNav } from "@/components/nav/top-nav";
 import { Footer } from "@/components/nav/footer";
@@ -6,6 +7,7 @@ import { AuroraBackground } from "@/components/bg/aurora-background";
 import { AdSenseScript } from "@/components/adsense/google-adsense";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
+import { subdomainFromHost } from "@/lib/sites/host";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
 
 const ADSENSE_CLIENT_ID =
@@ -86,7 +88,10 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const host = (await headers()).get("host");
+  const isHostedUserSite = Boolean(subdomainFromHost(host));
+
   return (
     <html lang="en" className="dark">
       <head>
@@ -103,20 +108,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
 
-        {/* Animated background — fixed, z-0 */}
-        <AuroraBackground />
-
-        {/* Content layer */}
-        <div className="relative z-10 flex flex-col min-h-screen">
-          <TopNav />
-          <main id="main" className="flex-1">
+        {isHostedUserSite ? (
+          <main id="main" className="min-h-screen">
             {children}
           </main>
-          <Footer />
-        </div>
-
-        {/* AdSense library (no-op when unconfigured) */}
-        <AdSenseScript />
+        ) : (
+          <>
+            <AuroraBackground />
+            <div className="relative z-10 flex flex-col min-h-screen">
+              <TopNav />
+              <main id="main" className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <AdSenseScript />
+          </>
+        )}
       </body>
     </html>
   );

@@ -6,7 +6,8 @@ workers_dev = true
 preview_urls = true
 
 routes = [
-  { pattern = "playstorewizard.pro/*", zone_name = "playstorewizard.pro" }
+  { pattern = "playstorewizard.pro/*", zone_name = "playstorewizard.pro" },
+  { pattern = "*.playstorewizard.pro/*", zone_name = "playstorewizard.pro" }
 ]
 
 [assets]
@@ -15,6 +16,14 @@ binding = "ASSETS"
 
 [ai]
 binding = "AI"
+
+[[kv_namespaces]]
+binding = "USER_SITES"
+id = "2d3f19cd03224025a726d5dd75283c80"
+
+[[kv_namespaces]]
+binding = "SITE_EVENTS"
+id = "6adcafb024ad410dabc054c5cc7618bd"
 
 [[services]]
 binding = "WORKER_SELF_REFERENCE"
@@ -31,6 +40,7 @@ PAYPAL_ENV = "live"
 # PAYPAL_CLIENT_ID
 # PAYPAL_CLIENT_SECRET
 # LICENSE_SIGNING_SECRET
+# ADMIN_ACCESS_TOKEN
 #
 # Optional:
 # STRIPE_PRICE_PRO_MONTHLY

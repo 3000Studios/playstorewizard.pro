@@ -122,10 +122,10 @@ export function SuccessClient() {
               </h1>
               <p className="mt-5 text-text-muted leading-relaxed max-w-md mx-auto">{message}</p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Link href="/wizard/data-safety">
+                <Link href="/dashboard">
                   <Button variant="aurora" size="lg">
                     <Sparkles className="h-4 w-4" />
-                    Pick up where you left off
+                    Open your dashboard
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>

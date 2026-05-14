@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, Eyebrow, Badge } from "@/components/ui/primitives";
 import { Reveal, Stagger } from "@/components/motion/reveal";
 import { AdUnit } from "@/components/adsense/google-adsense";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd } from "@/lib/seo/metadata";
+import { SitePreview } from "@/components/sites/site-preview";
+import { subdomainFromHost } from "@/lib/sites/host";
+import { getSite } from "@/lib/sites/store";
 import {
   Sparkles,
   Rocket,
@@ -19,7 +24,15 @@ import {
   Star,
 } from "lucide-react";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const host = (await headers()).get("host");
+  const subdomain = subdomainFromHost(host);
+  if (subdomain) {
+    const site = await getSite(subdomain);
+    if (site?.status === "published") return <SitePreview site={site} framed={false} />;
+    notFound();
+  }
+
   return (
     <>
       <JsonLd data={buildBreadcrumbLd([{ name: "Home", path: "/" }])} />
