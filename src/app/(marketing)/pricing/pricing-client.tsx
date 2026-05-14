@@ -218,27 +218,8 @@ function CheckoutButton({
   billing: Billing;
   isFeatured: boolean;
 }) {
-  const [loading, setLoading] = React.useState<null | "stripe" | "paypal">(null);
-  const [showPaypal, setShowPaypal] = React.useState(false);
+  const [loading, setLoading] = React.useState<null | "paypal">(null);
   const [error, setError] = React.useState<string | null>(null);
-
-  async function startStripe() {
-    setLoading("stripe");
-    setError(null);
-    try {
-      const res = await fetch("/api/checkout/stripe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier, billing }),
-      });
-      const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok || !data.url) throw new Error(data.error || "Could not start checkout");
-      window.location.href = data.url;
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Checkout failed");
-      setLoading(null);
-    }
-  }
 
   async function startPaypal() {
     setLoading("paypal");
@@ -280,31 +261,15 @@ function CheckoutButton({
         variant={isFeatured ? "aurora" : "outline"}
         size="md"
         className="w-full"
-        onClick={startStripe}
+        onClick={startPaypal}
         disabled={loading !== null}
       >
         <Sparkles className="h-4 w-4" />
-        {loading === "stripe" ? "Loading…" : "Pay with card"}
+        {loading === "paypal" ? "Loading…" : "Pay with PayPal"}
       </Button>
-      {!showPaypal ? (
-        <button
-          type="button"
-          onClick={() => setShowPaypal(true)}
-          className="block w-full text-xs text-text-muted hover:text-text mt-2"
-        >
-          or pay with PayPal
-        </button>
-      ) : (
-        <Button
-          variant="outline"
-          size="md"
-          className="w-full !bg-[#FFC439] !text-[#142C8E] !border-[#FFC439] hover:!bg-[#FFB100] hover:!border-[#FFB100]"
-          onClick={startPaypal}
-          disabled={loading !== null}
-        >
-          {loading === "paypal" ? "Loading…" : "PayPal"}
-        </Button>
-      )}
+      <p className="text-[11px] text-text-dim text-center">
+        Card checkout is being activated. PayPal accepts cards at checkout.
+      </p>
       {error && (
         <p className="text-[11px] text-rose-300 mt-1.5">{error}</p>
       )}

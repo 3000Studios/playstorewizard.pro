@@ -48,24 +48,6 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
   const stepsDone = data.completedSteps.length;
   const stepsLeft = STEPS.length - stepNum + 1;
 
-  async function checkout(tier: "pro" | "studio") {
-    setBusy(tier === "pro" ? "pro-monthly" : "studio-monthly");
-    setErr(null);
-    try {
-      const r = await fetch("/api/checkout/stripe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier, billing: "monthly" }),
-      });
-      const d = (await r.json()) as { url?: string; error?: string };
-      if (!r.ok || !d.url) throw new Error(d.error ?? "Could not start checkout");
-      window.location.href = d.url;
-    } catch (e) {
-      setErr(e instanceof Error ? e.message : "Checkout failed");
-      setBusy(null);
-    }
-  }
-
   async function checkoutPaypal(tier: "pro" | "studio") {
     setBusy(tier === "pro" ? "pro-monthly" : "studio-monthly");
     setErr(null);
@@ -162,20 +144,15 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
                   variant="aurora"
                   size="md"
                   className="w-full"
-                  onClick={() => checkout("pro")}
+                  onClick={() => checkoutPaypal("pro")}
                   disabled={busy !== null}
                 >
                   <Sparkles className="h-4 w-4" />
-                  {busy === "pro-monthly" ? "Loading…" : "Unlock Pro - $9.99"}
+                  {busy === "pro-monthly" ? "Loading…" : "Unlock Pro with PayPal - $9.99"}
                 </Button>
-                <button
-                  type="button"
-                  onClick={() => checkoutPaypal("pro")}
-                  disabled={busy !== null}
-                  className="w-full text-xs text-text-muted hover:text-text py-1"
-                >
-                  or pay with PayPal
-                </button>
+                <p className="text-[11px] text-text-dim text-center">
+                  Card checkout is being activated. PayPal accepts cards.
+                </p>
               </div>
             </div>
 
@@ -195,19 +172,14 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
                   variant="outline"
                   size="md"
                   className="w-full"
-                  onClick={() => checkout("studio")}
-                  disabled={busy !== null}
-                >
-                  Upgrade to Studio
-                </Button>
-                <button
-                  type="button"
                   onClick={() => checkoutPaypal("studio")}
                   disabled={busy !== null}
-                  className="w-full text-xs text-text-muted hover:text-text py-1"
                 >
-                  or pay with PayPal
-                </button>
+                  Upgrade to Studio with PayPal
+                </Button>
+                <p className="text-[11px] text-text-dim text-center">
+                  Card checkout is being activated. PayPal accepts cards.
+                </p>
               </div>
             </div>
           </div>

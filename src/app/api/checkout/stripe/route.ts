@@ -74,6 +74,9 @@ export async function POST(req: Request) {
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Unknown error";
     console.error("[checkout/stripe]", msg);
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json(
+      { error: "Card checkout is being activated. Please use PayPal checkout for now." },
+      { status: 503 }
+    );
   }
 }
