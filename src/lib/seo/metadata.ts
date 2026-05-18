@@ -76,11 +76,6 @@ export function buildSoftwareAppLd() {
       price: "0",
       priceCurrency: "USD",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      ratingCount: "127",
-    },
     description: SITE_TAGLINE,
     url: SITE_URL,
     author: {
@@ -115,7 +110,9 @@ export function buildArticleLd(input: {
     url: `${SITE_URL}${input.path}`,
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
-    author: { "@type": "Organization", name: input.author ?? SITE_NAME },
+    author: input.author
+      ? { "@type": "Person", name: input.author, url: `${SITE_URL}/about` }
+      : { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,

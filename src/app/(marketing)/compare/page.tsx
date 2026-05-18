@@ -29,9 +29,30 @@ const ROWS: { feature: string; us: Cell; manual: Cell; fastlane: Cell; contracto
 ];
 
 function Icon({ v }: { v: Cell }) {
-  if (v === "yes") return <Check className="h-4 w-4 text-emerald-400 mx-auto" />;
-  if (v === "no") return <X className="h-4 w-4 text-rose-400 mx-auto" />;
-  if (v === "partial") return <Minus className="h-4 w-4 text-amber-400 mx-auto" />;
+  if (v === "yes") {
+    return (
+      <>
+        <Check aria-hidden="true" className="h-4 w-4 text-emerald-400 mx-auto" />
+        <span className="sr-only">Supported</span>
+      </>
+    );
+  }
+  if (v === "no") {
+    return (
+      <>
+        <X aria-hidden="true" className="h-4 w-4 text-rose-400 mx-auto" />
+        <span className="sr-only">Not supported</span>
+      </>
+    );
+  }
+  if (v === "partial") {
+    return (
+      <>
+        <Minus aria-hidden="true" className="h-4 w-4 text-amber-400 mx-auto" />
+        <span className="sr-only">Partial support</span>
+      </>
+    );
+  }
   return <span className="text-xs text-text-muted font-mono">{v}</span>;
 }
 

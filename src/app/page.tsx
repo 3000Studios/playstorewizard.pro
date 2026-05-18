@@ -21,7 +21,6 @@ import {
   Send,
   ArrowRight,
   Check,
-  Star,
 } from "lucide-react";
 
 export default async function HomePage() {
@@ -193,7 +192,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ===================== TRUST / TESTIMONIAL ===================== */}
+      {/* ===================== TRUST ===================== */}
       <section className="container py-20 sm:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <Reveal>
@@ -226,20 +225,29 @@ export default async function HomePage() {
 
           <Reveal delay={100}>
             <Card className="p-8">
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <blockquote className="font-display text-xl leading-relaxed text-balance">
-                &ldquo;Cut my submission prep from a weekend of frustration to under an hour.
-                The Data Safety walkthrough alone is worth it.&rdquo;
-              </blockquote>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-grad-aurora" />
+              <Eyebrow>Honest disclosure</Eyebrow>
+              <h3 className="mt-3 font-display font-bold text-2xl tracking-tight">
+                A new tool, built in public.
+              </h3>
+              <p className="mt-4 text-sm text-text-muted leading-relaxed">
+                Playstore Wizard launched on May 13, 2026. Rather than dress up the early days with stock
+                testimonials, we&apos;re shipping fast, listening hard, and crediting real users by name as
+                they ship. If you publish your app through the wizard and want to share what worked,
+                email <a className="text-indigo-300 hover:text-indigo-200 underline decoration-indigo-500/40 underline-offset-4" href="mailto:hello@playstorewizard.pro">hello@playstorewizard.pro</a>{" "}
+                and we&apos;ll feature you here — with a link to your app.
+              </p>
+              <div className="mt-6 grid grid-cols-3 gap-3 text-center">
                 <div>
-                  <div className="text-sm font-medium">Indie developer</div>
-                  <div className="text-xs text-text-muted">Productivity category</div>
+                  <div className="font-display font-bold text-2xl">15</div>
+                  <div className="text-[10px] uppercase tracking-widest text-text-muted">Guides</div>
+                </div>
+                <div>
+                  <div className="font-display font-bold text-2xl">22</div>
+                  <div className="text-[10px] uppercase tracking-widest text-text-muted">Rules checked</div>
+                </div>
+                <div>
+                  <div className="font-display font-bold text-2xl">$0</div>
+                  <div className="text-[10px] uppercase tracking-widest text-text-muted">To start</div>
                 </div>
               </div>
             </Card>

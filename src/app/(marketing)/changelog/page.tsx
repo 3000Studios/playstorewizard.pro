@@ -3,37 +3,13 @@ import { Eyebrow, Badge, Card } from "@/components/ui/primitives";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd, pageMetadata } from "@/lib/seo/metadata";
 import { formatDate } from "@/lib/utils";
+import { RELEASES } from "@/lib/content/releases";
 
 export const metadata = pageMetadata({
   title: "Changelog",
   description: "Every release of Playstore Wizard — new features, bug fixes, and policy-rule updates.",
   path: "/changelog",
 });
-
-interface Release {
-  version: string;
-  date: string;
-  tags: ("new" | "improved" | "fixed" | "policy")[];
-  changes: { type: "new" | "improved" | "fixed" | "policy"; text: string }[];
-}
-
-const RELEASES: Release[] = [
-  {
-    version: "0.1.0",
-    date: "2026-05-13",
-    tags: ["new", "policy"],
-    changes: [
-      { type: "new", text: "Initial release: 12-step wizard, compliance auto-check, AI listings, asset auto-resize." },
-      { type: "policy", text: "Compliance engine knows about the August 2025 API 35 mandate." },
-      { type: "policy", text: "Compliance engine knows about the August 2026 API 36 deadline." },
-      { type: "policy", text: "Pricing calculator updated for the June 2026 service-fee restructure." },
-      { type: "policy", text: "Compliance engine enforces the 12-tester, 14-day rule for personal accounts." },
-      { type: "new", text: "Browser-side AAB parser — no bundletool required." },
-      { type: "new", text: "Privacy policy generator from Data Safety answers." },
-      { type: "new", text: "AI runs on Cloudflare Workers AI free tier, with Ollama fallback for local dev." },
-    ],
-  },
-];
 
 const TAG_COLOR: Record<string, "indigo" | "emerald" | "amber" | "rose"> = {
   new: "indigo",
@@ -54,7 +30,8 @@ export default function ChangelogPage() {
             What&apos;s <span className="accent-italic text-aurora">new.</span>
           </h1>
           <p className="mt-6 text-lg text-text-muted">
-            Every release. Every policy-rule update. Every fix. Subscribe to RSS at <code className="text-indigo-300 bg-bg-3 px-1.5 py-0.5 rounded font-mono text-xs">/changelog/rss.xml</code> (coming soon).
+            Every release. Every policy-rule update. Every fix. Subscribe via{" "}
+            <a href="/changelog/rss.xml" className="text-indigo-300 bg-bg-3 px-1.5 py-0.5 rounded font-mono text-xs hover:text-indigo-200">/changelog/rss.xml</a>.
           </p>
         </Reveal>
 

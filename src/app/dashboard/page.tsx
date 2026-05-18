@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { DashboardClient } from "./dashboard-client";
 
 export const metadata: Metadata = {
-  title: "User Dashboard · Playstore Wizard",
-  description: "Generate, edit, save, and publish conversion-ready sites on Playstore Wizard subdomains.",
+  title: "Launch Page Builder · Playstore Wizard",
+  description: "Generate, edit, and publish a marketing landing page for your Android app on a free Playstore Wizard subdomain.",
   robots: { index: false, follow: false },
 };
 

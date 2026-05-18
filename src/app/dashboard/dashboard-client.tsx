@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { Check, Globe2, Loader2, Palette, Rocket, Save, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge, Card, CardContent, CardHeader, Input, Label, Textarea } from "@/components/ui/primitives";
@@ -102,10 +103,12 @@ export function DashboardClient() {
     <div className="container py-10">
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <Badge variant="emerald">User dashboard</Badge>
-          <h1 className="mt-4 font-display text-4xl font-black tracking-tight sm:text-6xl">Generate, edit, and publish sites</h1>
+          <Badge variant="emerald">Launch page builder</Badge>
+          <h1 className="mt-4 font-display text-4xl font-black tracking-tight sm:text-6xl">Build your app&apos;s landing page</h1>
           <p className="mt-4 max-w-2xl text-text-muted">
-            Create a premium landing page, edit the page copy visually, save it, then publish it to a live Playstore Wizard subdomain.
+            Generate a polished marketing site for your Android app on a free{" "}
+            <code className="rounded bg-bg-3 px-1.5 py-0.5 font-mono text-xs">*.playstorewizard.pro</code> subdomain — separate from your Play Store wizard progress, which lives at{" "}
+            <Link href="/wizard" className="text-indigo-300 underline decoration-indigo-500/40 underline-offset-4 hover:text-indigo-200">/wizard</Link>.
           </p>
         </div>
         <div className="rounded-xl border border-border bg-bg-2 px-4 py-3 text-sm text-text-muted">
