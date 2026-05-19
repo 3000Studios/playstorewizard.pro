@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/payments/stripe";
+import { getEnv } from "@/lib/cloudflare";
 import type Stripe from "stripe";
 
 /**
@@ -20,7 +21,7 @@ import type Stripe from "stripe";
  */
 export async function POST(req: Request) {
   const stripe = getStripe();
-  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  const secret = getEnv("STRIPE_WEBHOOK_SECRET");
   if (!secret) {
     return NextResponse.json({ error: "Webhook not configured" }, { status: 503 });
   }

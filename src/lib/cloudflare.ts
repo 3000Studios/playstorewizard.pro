@@ -52,6 +52,21 @@ export function getRuntimeEnv(): RuntimeEnv {
   }
 }
 
+/**
+ * Read a Cloudflare secret or env var by name.
+ * Prefers the Cloudflare runtime `env` object (where encrypted secrets live)
+ * and falls back to `process.env` for local development.
+ */
+export function getEnv(key: string): string | undefined {
+  try {
+    const val = (getCloudflareContext().env as Record<string, string | undefined>)[key];
+    if (val !== undefined) return val;
+  } catch {
+    // not in Cloudflare runtime — fall through to process.env
+  }
+  return process.env[key];
+}
+
 export function getUserSitesKv(): KvNamespace {
   return getRuntimeEnv().USER_SITES ?? memoryKv("USER_SITES");
 }

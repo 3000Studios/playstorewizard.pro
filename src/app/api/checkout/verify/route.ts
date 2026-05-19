@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getStripe } from "@/lib/payments/stripe";
 import { signLicense, type License, type Tier } from "@/lib/pro/tiers";
+import { getEnv, getSiteEventsKv } from "@/lib/cloudflare";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 const BodySchema = z.object({
   provider: z.enum(["stripe", "paypal"]),
@@ -10,6 +12,8 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const rl = await rateLimit(req, { scope: "checkout-verify", limit: 20, windowSec: 600 });
+  if (!rl.ok) return rateLimitResponse(rl);
   try {
     const json = await req.json();
     const parsed = BodySchema.safeParse(json);
@@ -18,7 +22,7 @@ export async function POST(req: Request) {
     }
     const { provider, sessionId, paypalOrderId } = parsed.data;
 
-    const signingSecret = process.env.LICENSE_SIGNING_SECRET;
+    const signingSecret = getEnv("LICENSE_SIGNING_SECRET");
     if (!signingSecret) {
       return NextResponse.json({ error: "Server is not configured to issue licenses" }, { status: 503 });
     }
@@ -60,12 +64,12 @@ export async function POST(req: Request) {
       // Re-fetch the order from PayPal to confirm it is paid and read the
       // tier:billing pair from the custom_id we set on order create.
       const tokenRes = await fetch(
-        (process.env.PAYPAL_ENV === "sandbox" ? "https://api-m.sandbox.paypal.com" : "https://api-m.paypal.com") +
+        (getEnv("PAYPAL_ENV") === "sandbox" ? "https://api-m.sandbox.paypal.com" : "https://api-m.paypal.com") +
           "/v1/oauth2/token",
         {
           method: "POST",
           headers: {
-            Authorization: "Basic " + btoa(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`),
+            Authorization: "Basic " + btoa(`${getEnv("PAYPAL_CLIENT_ID")}:${getEnv("PAYPAL_CLIENT_SECRET")}`),
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: "grant_type=client_credentials",
@@ -76,7 +80,7 @@ export async function POST(req: Request) {
       }
       const { access_token } = (await tokenRes.json()) as { access_token: string };
       const orderRes = await fetch(
-        (process.env.PAYPAL_ENV === "sandbox" ? "https://api-m.sandbox.paypal.com" : "https://api-m.paypal.com") +
+        (getEnv("PAYPAL_ENV") === "sandbox" ? "https://api-m.sandbox.paypal.com" : "https://api-m.paypal.com") +
           "/v2/checkout/orders/" +
           paypalOrderId,
         {
@@ -126,11 +130,27 @@ export async function POST(req: Request) {
       issuedAt: new Date().toISOString(),
     };
 
-    const signed = await signLicense(payload, signingSecret);
-    return NextResponse.json(signed, { headers: { "Cache-Control": "no-store" } });
+    // Idempotency: prevent the same paid order from minting multiple licenses.
+    const idKey = provider === "stripe" ? `mint:stripe:${sessionId}` : `mint:paypal:${paypalOrderId}`;
+    try {
+      const kv = getSiteEventsKv();
+      const prior = await kv.get(idKey);
+      if (prior) {
+        return NextResponse.json(JSON.parse(prior), { headers: { "Cache-Control": "no-store" } });
+      }
+      const signed = await signLicense(payload, signingSecret);
+      await kv.put(idKey, JSON.stringify(signed), { expirationTtl: 60 * 60 * 24 * 400 });
+      return NextResponse.json(signed, { headers: { "Cache-Control": "no-store" } });
+    } catch {
+      const signed = await signLicense(payload, signingSecret);
+      return NextResponse.json(signed, { headers: { "Cache-Control": "no-store" } });
+    }
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Unknown error";
     console.error("[checkout/verify]", msg);
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json(
+      { error: "Could not verify payment. Please contact support if you were charged." },
+      { status: 500 }
+    );
   }
 }

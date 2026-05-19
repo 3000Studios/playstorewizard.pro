@@ -176,7 +176,7 @@ export function PricingClient() {
               },
               {
                 q: "Can I cancel anytime?",
-                a: "Yes. Monthly and yearly plans cancel from your account settings — no email required. Yearly plans get a prorated refund if cancelled within 30 days.",
+                a: "Yes. Monthly and yearly plans cancel from your account settings. Cancellation stops the next renewal; your current paid period remains active through its end date. No refunds or credits are issued for the unused portion (see our Terms for the full no-refund policy and statutory exceptions).",
               },
               {
                 q: "What counts as an 'app' on the Pro tier?",
@@ -184,11 +184,15 @@ export function PricingClient() {
               },
               {
                 q: "Do you offer student or open-source discounts?",
-                a: "Yes — open-source apps with a public repo get 50% off Pro. Students with a .edu email get 6 months of Pro free. Email us at hello@playstorewizard.pro.",
+                a: "Yes — open-source apps with a public repo get 50% off Pro. Students with a .edu email get 6 months of Pro free. Email hello@playstorewizard.pro.",
               },
               {
                 q: "What's the refund policy?",
-                a: "30-day money-back guarantee on yearly plans, no questions asked. Monthly plans cancel at the end of the billing period.",
+                a: "All sales are final. We don't issue refunds, credits, or proration for unused time on monthly, yearly, or lifetime plans — including for forgotten cancellations or change of mind. The Free tier is unlimited so you can fully evaluate the product before paying. We honor refund requirements imposed by applicable law in your jurisdiction (e.g. statutory EU/UK cooling-off rights).",
+              },
+              {
+                q: "Why is PayPal only shown for lifetime plans?",
+                a: "PayPal in this app handles one-time purchases only. To avoid customers expecting auto-renewal that won't happen, monthly and yearly are card-only via Stripe. Lifetime accepts both.",
               },
             ].map((f) => (
               <details key={f.q} className="rounded-xl border border-border bg-bg-2/40 p-5 group">
@@ -207,8 +211,10 @@ export function PricingClient() {
 }
 
 // ============================================================================
-// CheckoutButton — handles Stripe (primary) + PayPal (secondary) flows
+// CheckoutButton — Stripe (primary, all billing) + PayPal (lifetime-only)
 // ============================================================================
+type Provider = "stripe" | "paypal";
+
 function CheckoutButton({
   tier,
   billing,
@@ -218,23 +224,27 @@ function CheckoutButton({
   billing: Billing;
   isFeatured: boolean;
 }) {
-  const [loading, setLoading] = React.useState<null | "paypal">(null);
+  const [loading, setLoading] = React.useState<null | Provider>(null);
   const [error, setError] = React.useState<string | null>(null);
 
-  async function startPaypal() {
-    setLoading("paypal");
+  async function startCheckout(provider: Provider) {
+    setLoading(provider);
     setError(null);
     try {
-      const res = await fetch("/api/checkout/paypal", {
+      const endpoint = provider === "stripe" ? "/api/checkout/stripe" : "/api/checkout/paypal";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tier, billing }),
       });
-      const data = (await res.json()) as { approveUrl?: string; error?: string };
-      if (!res.ok || !data.approveUrl) throw new Error(data.error || "Could not start PayPal");
-      window.location.href = data.approveUrl;
+      const data = (await res.json()) as { url?: string; approveUrl?: string; error?: string };
+      const redirectUrl = data.url ?? data.approveUrl;
+      if (!res.ok || !redirectUrl) {
+        throw new Error(data.error || `Checkout failed (HTTP ${res.status})`);
+      }
+      window.location.href = redirectUrl;
     } catch (e) {
-      setError(e instanceof Error ? e.message : "PayPal checkout failed");
+      setError(e instanceof Error ? e.message : "Checkout failed");
       setLoading(null);
     }
   }
@@ -247,13 +257,8 @@ function CheckoutButton({
     );
   }
 
-  if (tier === "studio") {
-    return (
-      <a href="mailto:hello@playstorewizard.pro?subject=Studio%20tier%20inquiry" className="block mt-6">
-        <Button variant="outline" size="md" className="w-full">Talk to us</Button>
-      </a>
-    );
-  }
+  const showPaypal = billing === "lifetime";
+  const billingLabel = billing === "lifetime" ? "Pay once, use forever." : "Cancel anytime.";
 
   return (
     <div className="mt-6 space-y-2">
@@ -261,17 +266,33 @@ function CheckoutButton({
         variant={isFeatured ? "aurora" : "outline"}
         size="md"
         className="w-full"
-        onClick={startPaypal}
+        onClick={() => startCheckout("stripe")}
         disabled={loading !== null}
+        aria-label={`Pay with card`}
       >
         <Sparkles className="h-4 w-4" />
-        {loading === "paypal" ? "Loading…" : "Pay with PayPal"}
+        {loading === "stripe" ? "Loading…" : "Pay with card"}
       </Button>
+
+      {showPaypal && (
+        <Button
+          variant="outline"
+          size="md"
+          className="w-full"
+          onClick={() => startCheckout("paypal")}
+          disabled={loading !== null}
+          aria-label={`Pay with PayPal`}
+        >
+          {loading === "paypal" ? "Loading…" : "Pay with PayPal"}
+        </Button>
+      )}
+
       <p className="text-[11px] text-text-dim text-center">
-        Card checkout is being activated. PayPal accepts cards at checkout.
+        Secure checkout via {showPaypal ? "Stripe or PayPal" : "Stripe"}. {billingLabel}
       </p>
+
       {error && (
-        <p className="text-[11px] text-rose-300 mt-1.5">{error}</p>
+        <p className="text-[11px] text-rose-300 mt-1.5 text-center" role="alert">{error}</p>
       )}
     </div>
   );

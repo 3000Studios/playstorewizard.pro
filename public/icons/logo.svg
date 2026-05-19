@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" role="img" aria-label="Playstore Wizard">
+  <defs>
+    <linearGradient id="psw-mark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="40%" stop-color="#8b5cf6"/>
+      <stop offset="75%" stop-color="#d946ef"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+    <linearGradient id="psw-mark-soft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="psw-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+
+  <!-- Mark: triangular play form fused with a wizard sparkle -->
+  <g transform="translate(4,8)">
+    <rect x="0" y="0" width="48" height="48" rx="12" fill="url(#psw-mark)"/>
+    <rect x="0" y="0" width="48" height="48" rx="12" fill="url(#psw-mark-soft)" opacity="0.35"/>
+    <!-- Play triangle -->
+    <path d="M19 14 L36 24 L19 34 Z" fill="#ffffff" filter="url(#psw-glow)"/>
+    <!-- Sparkle -->
+    <path d="M11 38 L13 33 L15 38 L20 40 L15 42 L13 47 L11 42 L6 40 Z" fill="#ffffff" opacity="0.95"/>
+    <!-- Mini star -->
+    <circle cx="40" cy="10" r="1.6" fill="#ffffff"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(64,0)" fill="#f6f6f8" font-family="'Bricolage Grotesque', 'Inter', system-ui, sans-serif">
+    <text x="0" y="29" font-size="22" font-weight="700" letter-spacing="-0.5">Playstore</text>
+    <text x="0" y="52" font-size="22" font-weight="500" letter-spacing="-0.3" fill="url(#psw-mark)">Wizard</text>
+  </g>
+</svg>

@@ -1,19 +1,21 @@
 import Stripe from "stripe";
+import { getEnv } from "@/lib/cloudflare";
 
 /**
  * Stripe client (server-side only).
  *
- * The STRIPE_SECRET_KEY env var lives in Cloudflare Pages encrypted secrets — never in the repo
+ * The STRIPE_SECRET_KEY env var lives in Cloudflare encrypted secrets — never in the repo
  * and never sent to the browser. Edge runtime compatible via Stripe's fetch HTTP client.
  */
 let _stripe: Stripe | null = null;
 
 export function getStripe(): Stripe {
-  if (_stripe) return _stripe;
-  const key = process.env.STRIPE_SECRET_KEY;
+  // Don't cache across requests in case the key wasn't available on first call.
+  const key = getEnv("STRIPE_SECRET_KEY");
   if (!key) {
-    throw new Error("STRIPE_SECRET_KEY is not configured. Set it as a Cloudflare Pages secret.");
+    throw new Error("STRIPE_SECRET_KEY is not configured. Set it as a Cloudflare secret.");
   }
+  if (_stripe) return _stripe;
   _stripe = new Stripe(key, {
     apiVersion: "2026-04-22.dahlia",
     httpClient: Stripe.createFetchHttpClient(),

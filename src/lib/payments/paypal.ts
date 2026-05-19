@@ -7,16 +7,18 @@
  *   PAYPAL_ENV               — "live" or "sandbox" (default "live")
  */
 
+import { getEnv } from "@/lib/cloudflare";
+
 const LIVE_BASE = "https://api-m.paypal.com";
 const SANDBOX_BASE = "https://api-m.sandbox.paypal.com";
 
 function paypalBase(): string {
-  return process.env.PAYPAL_ENV === "sandbox" ? SANDBOX_BASE : LIVE_BASE;
+  return getEnv("PAYPAL_ENV") === "sandbox" ? SANDBOX_BASE : LIVE_BASE;
 }
 
 async function getAccessToken(): Promise<string> {
-  const clientId = process.env.PAYPAL_CLIENT_ID;
-  const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
+  const clientId = getEnv("PAYPAL_CLIENT_ID");
+  const clientSecret = getEnv("PAYPAL_CLIENT_SECRET");
   if (!clientId || !clientSecret) {
     throw new Error("PayPal credentials are not configured (PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET).");
   }
@@ -67,8 +69,8 @@ export async function createPaypalOrder(input: PaypalOrderInput): Promise<{ id: 
         brand_name: "Playstore Wizard",
         shipping_preference: "NO_SHIPPING",
         user_action: "PAY_NOW",
-        return_url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://playstorewizard.pro"}/checkout/success?provider=paypal`,
-        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://playstorewizard.pro"}/pricing?canceled=1`,
+        return_url: `${getEnv("NEXT_PUBLIC_SITE_URL") ?? "https://playstorewizard.pro"}/checkout/success?provider=paypal`,
+        cancel_url: `${getEnv("NEXT_PUBLIC_SITE_URL") ?? "https://playstorewizard.pro"}/pricing?canceled=1`,
       },
     }),
   });

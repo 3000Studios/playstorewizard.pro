@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
@@ -7,11 +8,13 @@ import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+// Public nav: focused on Play-Store-publishing surfaces.
+// /dashboard and /admin are intentionally NOT in the public nav.
+// /dashboard is the site-generator surface (unrelated to Play Store compliance)
+// and /admin is staff-only — both still reachable by direct URL.
 const NAV_LINKS = [
   { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/admin", label: "Admin" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/guides", label: "Guides" },
   { href: "/faq", label: "FAQ" },
@@ -42,13 +45,21 @@ export function TopNav() {
       )}
     >
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group" aria-label="Playstore Wizard home">
-          <div className="relative h-8 w-8 rounded-lg bg-grad-aurora overflow-hidden transition-transform group-hover:scale-110">
-            <div className="absolute inset-[3px] rounded-md bg-gradient-to-br from-white/40 to-transparent" />
-          </div>
-          <span className="font-display font-bold text-base tracking-tight">
-            Playstore Wizard
-          </span>
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 group illuminate"
+          aria-label="Playstore Wizard home"
+        >
+          <Image
+            src="/icons/logo.svg"
+            alt="Playstore Wizard"
+            width={320}
+            height={64}
+            priority
+            unoptimized
+            sizes="(min-width: 768px) 220px, 180px"
+            className="h-10 w-auto transition-transform duration-200 group-hover:scale-[1.04] drop-shadow-[0_0_18px_rgba(139,92,246,0.35)] group-hover:drop-shadow-[0_0_28px_rgba(217,70,239,0.6)]"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
@@ -59,9 +70,9 @@ export function TopNav() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                  "illuminate px-3 py-1.5 rounded-md text-[15px] font-medium transition-all duration-200",
                   active
-                    ? "text-text bg-bg-3"
+                    ? "text-text bg-bg-3 shadow-[inset_0_0_0_1px_rgba(165,180,252,0.25)]"
                     : "text-text-muted hover:text-text hover:bg-bg-3"
                 )}
                 aria-current={active ? "page" : undefined}
@@ -101,7 +112,7 @@ export function TopNav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2.5 rounded-md text-sm text-text-muted hover:text-text hover:bg-bg-3"
+                className="px-3 py-2.5 rounded-md text-[15px] text-text-muted hover:text-text hover:bg-bg-3 illuminate"
               >
                 {link.label}
               </Link>

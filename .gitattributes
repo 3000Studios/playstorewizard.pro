@@ -1,0 +1,25 @@
+# Normalize line endings — prevents CRLF/LF churn between Windows and Linux.
+# Repo standard is LF. Windows tools (VS Code, Prettier, etc.) auto-convert on
+# checkout if core.autocrlf is set to "true" or "input".
+
+* text=auto eol=lf
+
+# Windows-only files keep CRLF
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+*.ps1       text eol=crlf
+
+# Binary — never touch
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.webp      binary
+*.pdf       binary
+*.docx      binary
+*.xlsx      binary
+*.pptx      binary
+*.zip       binary
+*.aab       binary
+*.apk       binary

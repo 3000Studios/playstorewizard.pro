@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Playstore Wizard">
+  <defs>
+    <linearGradient id="psw-icon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="40%" stop-color="#8b5cf6"/>
+      <stop offset="75%" stop-color="#d946ef"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+    <linearGradient id="psw-icon-soft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#psw-icon)"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#psw-icon-soft)" opacity="0.35"/>
+  <path d="M25 17 L46 30 L25 43 Z" fill="#ffffff"/>
+  <path d="M14 46 L17 39 L20 46 L27 49 L20 52 L17 59 L14 52 L7 49 Z" fill="#ffffff" opacity="0.95"/>
+  <circle cx="52" cy="14" r="2" fill="#ffffff"/>
+</svg>

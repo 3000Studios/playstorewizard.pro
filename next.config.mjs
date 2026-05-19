@@ -25,6 +25,19 @@ const nextConfig = {
         source: "/ads.txt",
         headers: [{ key: "Content-Type", value: "text/plain" }],
       },
+      // Long-cache static icons + OG image — they're versionless and rarely change.
+      {
+        source: "/icons/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
+        source: "/og-default.png",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=2592000, immutable" },
+        ],
+      },
     ];
   },
 };

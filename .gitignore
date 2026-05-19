@@ -40,3 +40,10 @@ google-sa-*.json
 
 # logs
 *.log
+
+# internal business docs (audit reports, plans) — keep out of public repo
+*.docx
+*.xlsx
+*.pdf
+!docs/**/*.pdf
+!public/**/*.pdf

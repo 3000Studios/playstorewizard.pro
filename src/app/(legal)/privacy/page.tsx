@@ -25,7 +25,7 @@ export default function PrivacyPage() {
           <h3>1.1 Information you provide</h3>
           <p>The wizard state — your app information, listing copy, screenshots, AAB metadata, Data Safety answers, and similar — is stored in your browser&apos;s localStorage. It is not sent to our servers unless you explicitly click an action that requires server processing (such as &quot;Generate listing with AI&quot; or &quot;Submit to Play Console&quot;).</p>
           <h3>1.2 Account information (Pro and Studio users)</h3>
-          <p>If you create a paid account, we collect your email address, payment processor identifier (e.g. Stripe customer ID), and subscription state. We do not store credit card numbers — those go directly to Stripe.</p>
+          <p>If you create a paid account, we collect your email address, payment-processor identifier (Stripe customer ID for card payments, PayPal order ID for lifetime PayPal purchases), and subscription state. We do not store credit card numbers, bank details, or PayPal credentials — those are handled directly by Stripe and PayPal under their respective privacy policies. Cloudflare provides our hosting and edge infrastructure; standard request metadata (IP, country, user agent) transits Cloudflare per their <a href="https://www.cloudflare.com/privacypolicy/">privacy policy</a>.</p>
           <h3>1.3 Usage data</h3>
           <p>We collect basic anonymized analytics: page views, wizard completion rates, browser type, screen size. No personally identifying information is associated with these events.</p>
           <h3>1.4 Cookies</h3>
@@ -36,6 +36,14 @@ export default function PrivacyPage() {
           <p>When you click &quot;Generate&quot; on an AI-powered field, the text you have typed (and only that text) is sent to Cloudflare Workers AI for processing. Cloudflare does not retain prompt data for model training under our service agreement. If you have configured a local Ollama endpoint, prompts go to your local machine instead and never leave your device.</p>
           <h2>4. Advertising (AdSense)</h2>
           <p>Our content pages display ads via Google AdSense. Google may use cookies and similar technologies to serve ads based on your previous visits to our or other websites. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads">Google&apos;s ad settings</a>. EU/UK users will see a consent banner before any non-essential cookies are set.</p>
+          <h2>4a. Third-party processors</h2>
+          <p>We rely on the following sub-processors. Each handles only the data needed to perform its function and is bound by its own privacy policy:</p>
+          <ul>
+            <li><strong>Stripe, Inc.</strong> — card payments, subscription billing, webhook events.</li>
+            <li><strong>PayPal Holdings, Inc.</strong> — lifetime-plan PayPal checkout.</li>
+            <li><strong>Cloudflare, Inc.</strong> — hosting (Workers), DNS, edge cache, KV storage, Workers AI inference, abuse-prevention rate limiting.</li>
+            <li><strong>Google LLC</strong> — AdSense advertising on content pages (see Section 4).</li>
+          </ul>
           <h2>5. Data retention</h2>
           <p>Wizard state remains in your browser indefinitely until you clear it. Account data is retained while your subscription is active and for 90 days after cancellation, then permanently deleted unless legally required to retain longer.</p>
           <h2>6. Your rights</h2>

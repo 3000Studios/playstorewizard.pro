@@ -33,6 +33,24 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
   const [busy, setBusy] = React.useState<"pro-monthly" | "studio-monthly" | null>(null);
   const [err, setErr] = React.useState<string | null>(null);
 
+  async function checkoutStripe(tier: "pro" | "studio") {
+    setBusy(tier === "pro" ? "pro-monthly" : "studio-monthly");
+    setErr(null);
+    try {
+      const r = await fetch("/api/checkout/stripe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tier, billing: "monthly" }),
+      });
+      const d = (await r.json()) as { url?: string; error?: string };
+      if (!r.ok || !d.url) throw new Error(d.error ?? "Could not start checkout");
+      window.location.href = d.url;
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Checkout failed");
+      setBusy(null);
+    }
+  }
+
   // Rough estimate of minutes invested so far.
   const minutesInvested = React.useMemo(() => {
     let m = 0;
@@ -47,24 +65,6 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
 
   const stepsDone = data.completedSteps.length;
   const stepsLeft = STEPS.length - stepNum + 1;
-
-  async function checkoutPaypal(tier: "pro" | "studio") {
-    setBusy(tier === "pro" ? "pro-monthly" : "studio-monthly");
-    setErr(null);
-    try {
-      const r = await fetch("/api/checkout/paypal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier, billing: "monthly" }),
-      });
-      const d = (await r.json()) as { approveUrl?: string; error?: string };
-      if (!r.ok || !d.approveUrl) throw new Error(d.error ?? "Could not start PayPal");
-      window.location.href = d.approveUrl;
-    } catch (e) {
-      setErr(e instanceof Error ? e.message : "PayPal failed");
-      setBusy(null);
-    }
-  }
 
   return (
     <div className="space-y-6">
@@ -144,14 +144,14 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
                   variant="aurora"
                   size="md"
                   className="w-full"
-                  onClick={() => checkoutPaypal("pro")}
+                  onClick={() => checkoutStripe("pro")}
                   disabled={busy !== null}
                 >
                   <Sparkles className="h-4 w-4" />
-                  {busy === "pro-monthly" ? "Loading…" : "Unlock Pro with PayPal - $9.99"}
+                  {busy === "pro-monthly" ? "Loading…" : "Unlock Pro — $9.99/mo"}
                 </Button>
                 <p className="text-[11px] text-text-dim text-center">
-                  Card checkout is being activated. PayPal accepts cards.
+                  Secure card checkout via Stripe. Cancel anytime.
                 </p>
               </div>
             </div>
@@ -172,13 +172,13 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
                   variant="outline"
                   size="md"
                   className="w-full"
-                  onClick={() => checkoutPaypal("studio")}
+                  onClick={() => checkoutStripe("studio")}
                   disabled={busy !== null}
                 >
-                  Upgrade to Studio with PayPal
+                  Upgrade to Studio — $49.99/mo
                 </Button>
                 <p className="text-[11px] text-text-dim text-center">
-                  Card checkout is being activated. PayPal accepts cards.
+                  Secure card checkout via Stripe. Cancel anytime.
                 </p>
               </div>
             </div>
@@ -202,7 +202,7 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
 
           <div className="mt-5 flex items-center gap-2 text-xs text-text-dim">
             <ShieldCheck className="h-3.5 w-3.5" />
-            <span>30-day money-back guarantee · Cancel from your inbox · No questions asked</span>
+            <span>Cancel anytime · Free tier stays usable · All sales final</span>
           </div>
           <div className="mt-1.5 flex items-center gap-2 text-xs text-text-dim">
             <Zap className="h-3.5 w-3.5" />

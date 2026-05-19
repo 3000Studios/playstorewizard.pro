@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { GUIDES } from "@/lib/content/guides";
 
@@ -46,11 +47,15 @@ export function Footer() {
       <div className="container py-16">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="relative h-8 w-8 rounded-lg bg-grad-aurora overflow-hidden">
-                <div className="absolute inset-[3px] rounded-md bg-gradient-to-br from-white/40 to-transparent" />
-              </div>
-              <span className="font-display font-bold text-base">Playstore Wizard</span>
+            <Link href="/" className="inline-flex items-center mb-4 group illuminate" aria-label="Playstore Wizard home">
+              <Image
+                src="/icons/logo-transparent.png"
+                alt="Playstore Wizard"
+                width={1200}
+                height={340}
+                sizes="(min-width: 768px) 220px, 180px"
+                className="h-10 w-auto transition-transform duration-200 group-hover:scale-[1.03] drop-shadow-[0_0_16px_rgba(139,92,246,0.3)] group-hover:drop-shadow-[0_0_24px_rgba(217,70,239,0.5)]"
+              />
             </Link>
             <p className="text-sm text-text-muted max-w-xs leading-relaxed">
               A guided publishing studio for Google Play. Compliance, listings, and submission — done right the first time.
@@ -72,7 +77,7 @@ export function Footer() {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="text-sm text-text-muted hover:text-text transition-colors"
+                      className="text-sm text-text-muted hover:text-text transition-colors illuminate"
                     >
                       {l.label}
                     </Link>
@@ -92,7 +97,7 @@ export function Footer() {
               <Link
                 key={g.slug}
                 href={`/guides/${g.slug}`}
-                className="text-sm text-text-muted hover:text-text transition-colors truncate"
+                className="text-sm text-text-muted hover:text-text transition-colors truncate illuminate"
               >
                 {g.title}
               </Link>

@@ -3,7 +3,7 @@
  *
  * Tiers:
  *   - free:    Single app, manual workflow, English-only AI
- *   - pro:     Unlimited apps, automation, multi-language, advanced AI ($14.99/mo)
+ *   - pro:     Unlimited apps, automation, multi-language, advanced AI ($9.99/mo)
  *   - studio:  Pro + team mode, white-label, agency tools ($49.99/mo)
  *
  * License keys are HMAC-signed JWTs issued at checkout. The wizard validates

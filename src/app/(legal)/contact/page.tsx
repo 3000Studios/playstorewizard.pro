@@ -3,6 +3,7 @@ import { Eyebrow, Card } from "@/components/ui/primitives";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd, pageMetadata } from "@/lib/seo/metadata";
 import { Mail, MessageSquare, Github, Bug, Lightbulb } from "lucide-react";
+import { ContactForm } from "@/components/contact/contact-form";
 
 export const metadata = pageMetadata({
   title: "Contact",
@@ -24,7 +25,15 @@ export default function ContactPage() {
             We aim for a response within one business day. For policy-related questions, please include your country and account type.
           </p>
         </Reveal>
-        <div className="mt-12 grid sm:grid-cols-2 gap-4">
+        <div className="mt-12">
+          <Reveal>
+            <ContactForm />
+          </Reveal>
+        </div>
+        <div className="mt-10 text-center">
+          <p className="text-xs font-mono uppercase tracking-widest text-text-dim">Or email us directly</p>
+        </div>
+        <div className="mt-6 grid sm:grid-cols-2 gap-4">
           {[
             { icon: Mail, title: "General inquiries", desc: "Anything that doesn't fit the other categories.", href: "mailto:hello@playstorewizard.pro", action: "hello@playstorewizard.pro" },
             { icon: Bug, title: "Bug reports", desc: "Found something broken? Include your browser and the wizard step.", href: "mailto:bugs@playstorewizard.pro", action: "bugs@playstorewizard.pro" },

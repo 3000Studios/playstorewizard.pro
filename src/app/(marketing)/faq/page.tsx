@@ -62,7 +62,7 @@ const FAQS = [
       },
       {
         question: "Do you offer a refund?",
-        answer: "Yes. Yearly Pro and Studio plans get a 30-day money-back guarantee, no questions asked. Monthly plans cancel at the end of the billing period.",
+        answer: "No. All sales are final on monthly, yearly, and lifetime plans. The Free tier is unlimited so you can fully evaluate the product before purchasing. Cancelling stops the next renewal but doesn't refund the current period. We honor statutory refund rights where required by law in your jurisdiction (e.g. EU/UK cooling-off rules).",
       },
     ],
   },

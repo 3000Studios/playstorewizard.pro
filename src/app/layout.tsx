@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { Bricolage_Grotesque, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "@/components/nav/top-nav";
 import { Footer } from "@/components/nav/footer";
 import { AuroraBackground } from "@/components/bg/aurora-background";
+import { AmbientAudio } from "@/components/audio/ambient-audio";
+import { SupportChat } from "@/components/support/support-chat";
 import { AdSenseScript } from "@/components/adsense/google-adsense";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
@@ -12,6 +15,30 @@ import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
 
 const ADSENSE_CLIENT_ID =
   process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-5800977493749262";
+
+// Self-hosted via next/font — eliminates render-blocking external font CSS,
+// auto-preloads, and prevents layout shift. Free, no per-request cost.
+const fontDisplay = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+const fontSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-serif",
+});
+
+const fontMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -66,8 +93,13 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/icons/icon-192.png",
-    apple: "/icons/icon-192.png",
+    icon: [
+      { url: "/icons/icon.svg", type: "image/svg+xml" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+    shortcut: "/icons/icon.svg",
   },
   other: {
     "copyright": `© ${new Date().getFullYear()} Mr. J. Swain · 3000 Studios. All rights reserved.`,
@@ -92,11 +124,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const host = (await headers()).get("host");
   const isHostedUserSite = Boolean(subdomainFromHost(host));
 
+  const fontVars = `${fontDisplay.variable} ${fontSerif.variable} ${fontMono.variable}`;
+
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={`dark ${fontVars}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <JsonLd data={[buildOrganizationLd(), buildSoftwareAppLd()]} />
       </head>
       <body className="bg-bg-0 text-text antialiased min-h-screen flex flex-col">
@@ -122,6 +154,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </main>
               <Footer />
             </div>
+            <AmbientAudio />
+            <SupportChat />
             <AdSenseScript />
           </>
         )}

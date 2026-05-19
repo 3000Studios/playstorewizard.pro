@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getStripe, STRIPE_PRICE_IDS } from "@/lib/payments/stripe";
 import { TIERS, ANNUAL_PRICES, LIFETIME_PRICES } from "@/lib/pro/tiers";
 import { SITE_URL } from "@/lib/utils";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 const BodySchema = z.object({
   tier: z.enum(["pro", "studio"]),
@@ -11,6 +12,8 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const rl = await rateLimit(req, { scope: "checkout-stripe", limit: 10, windowSec: 600 });
+  if (!rl.ok) return rateLimitResponse(rl);
   try {
     const json = await req.json();
     const parsed = BodySchema.safeParse(json);
@@ -72,11 +75,11 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ url: session.url }, { headers: { "Cache-Control": "no-store" } });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : "Unknown error";
+    const msg = e instanceof Error ? e.message : String(e);
     console.error("[checkout/stripe]", msg);
     return NextResponse.json(
-      { error: "Card checkout is being activated. Please use PayPal checkout for now." },
-      { status: 503 }
+      { error: "Could not start checkout. Please try again or contact support." },
+      { status: 500 }
     );
   }
 }
