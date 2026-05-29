@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { headers } from "next/headers";
 import { Bricolage_Grotesque, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
@@ -8,6 +9,7 @@ import { AuroraBackground } from "@/components/bg/aurora-background";
 import { AmbientAudio } from "@/components/audio/ambient-audio";
 import { SupportChat } from "@/components/support/support-chat";
 import { AdSenseScript } from "@/components/adsense/google-adsense";
+import { ConsentBanner } from "@/components/consent/consent-banner";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
 import { subdomainFromHost } from "@/lib/sites/host";
@@ -129,6 +131,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`dark ${fontVars}`}>
       <head>
+        {/* Google Consent Mode v2 — deny non-essential storage by default so
+            AdSense sets no ad cookies before the user chooses (see ConsentBanner). */}
+        <Script id="consent-default" strategy="beforeInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{var c=localStorage.getItem('psw-consent');if(c==='granted'){gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});}}catch(e){}`}
+        </Script>
         <JsonLd data={[buildOrganizationLd(), buildSoftwareAppLd()]} />
       </head>
       <body className="bg-bg-0 text-text antialiased min-h-screen flex flex-col">
@@ -157,6 +164,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <AmbientAudio />
             <SupportChat />
             <AdSenseScript />
+            <ConsentBanner />
           </>
         )}
       </body>

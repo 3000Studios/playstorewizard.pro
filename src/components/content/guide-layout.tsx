@@ -3,6 +3,7 @@ import { Calendar, Clock, ChevronRight } from "lucide-react";
 import { Eyebrow, Badge } from "@/components/ui/primitives";
 import { Reveal } from "@/components/motion/reveal";
 import { InArticleAd } from "@/components/adsense/google-adsense";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildArticleLd, buildBreadcrumbLd } from "@/lib/seo/metadata";
 import { getGuide, getRelatedGuides, type GuideMeta } from "@/lib/content/guides";
@@ -97,7 +98,7 @@ export function GuideLayout({ slug, children }: GuideLayoutProps) {
           <div className="prose-guide">{children}</div>
         </Reveal>
 
-        <InArticleAd slot="2345678901" className="my-12" />
+        <InArticleAd slot={AD_SLOTS.article} className="my-12" />
 
         <Reveal>
           <div className="mt-16 pt-8 border-t border-border">

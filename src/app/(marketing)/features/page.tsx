@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd } from "@/lib/seo/metadata";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { AdUnit } from "@/components/adsense/google-adsense";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 import {
   ShieldCheck, Brain, ImageIcon, Send, Workflow, Zap, BarChart3,
   FileCheck, Languages, Megaphone, Bell, Layers, Calendar, Database,
@@ -102,7 +103,7 @@ export default function FeaturesPage() {
       ))}
 
       <section className="container py-12">
-        <AdUnit slot="3456789012" />
+        <AdUnit slot={AD_SLOTS.features} />
       </section>
     </>
   );

@@ -3,6 +3,7 @@ import { Eyebrow } from "@/components/ui/primitives";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd, buildFaqLd, pageMetadata } from "@/lib/seo/metadata";
 import { AdUnit } from "@/components/adsense/google-adsense";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 
 export const metadata = pageMetadata({
   title: "FAQ",
@@ -144,7 +145,7 @@ export default function FaqPage() {
                 ))}
               </div>
             </Reveal>
-            {sIdx === 1 && <div className="mt-8"><AdUnit slot="4567890123" /></div>}
+            {sIdx === 1 && <div className="mt-8"><AdUnit slot={AD_SLOTS.faq} /></div>}
           </section>
         ))}
       </section>

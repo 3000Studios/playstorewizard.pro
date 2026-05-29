@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, Eyebrow, Badge } from "@/components/ui/primitives";
 import { Reveal, Stagger } from "@/components/motion/reveal";
 import { AdUnit } from "@/components/adsense/google-adsense";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd } from "@/lib/seo/metadata";
 import { SitePreview } from "@/components/sites/site-preview";
@@ -147,7 +148,7 @@ export default async function HomePage() {
 
       {/* ===================== AD SLOT (between sections) ===================== */}
       <section className="container">
-        <AdUnit slot="1234567890" />
+        <AdUnit slot={AD_SLOTS.home} />
       </section>
 
       {/* ===================== HOW IT WORKS ===================== */}

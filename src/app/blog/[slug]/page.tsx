@@ -4,6 +4,7 @@ import { Calendar, Clock, ChevronRight } from "lucide-react";
 import { Eyebrow, Badge } from "@/components/ui/primitives";
 import { Reveal } from "@/components/motion/reveal";
 import { InArticleAd } from "@/components/adsense/google-adsense";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildArticleLd, buildBreadcrumbLd, pageMetadata } from "@/lib/seo/metadata";
 import { getPost, listPosts } from "@/lib/blog/store";
@@ -110,7 +111,7 @@ export default async function BlogPost({
           <div className="prose-guide">{renderBody(post.body)}</div>
         </Reveal>
 
-        <InArticleAd slot="2345678901" className="my-12" />
+        <InArticleAd slot={AD_SLOTS.article} className="my-12" />
 
         {related.length > 0 && (
           <Reveal>

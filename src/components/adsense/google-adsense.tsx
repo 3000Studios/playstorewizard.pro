@@ -67,8 +67,12 @@ export function AdUnit({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [pushed, setPushed] = React.useState(false);
 
+  const adsConfigured =
+    Boolean(ADSENSE_CLIENT_ID) && ADSENSE_CLIENT_ID !== "ca-pub-0000000000000000";
+  const slotConfigured = Boolean(slot);
+
   React.useEffect(() => {
-    if (!ADSENSE_CLIENT_ID || ADSENSE_CLIENT_ID === "ca-pub-0000000000000000") return;
+    if (!adsConfigured || !slotConfigured) return;
     if (pushed) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -76,10 +80,30 @@ export function AdUnit({
     } catch (e) {
       console.warn("AdSense push failed:", e);
     }
-  }, [pushed]);
+  }, [pushed, adsConfigured, slotConfigured]);
 
-  const isPlaceholder =
-    !ADSENSE_CLIENT_ID || ADSENSE_CLIENT_ID === "ca-pub-0000000000000000";
+  // No real ad-unit slot configured yet: render a dev placeholder so layout
+  // stays testable, but emit nothing in production (avoids invalid requests).
+  if (!slotConfigured) {
+    if (process.env.NODE_ENV === "production") return null;
+    return (
+      <div className={`my-8 ${className ?? ""}`} aria-hidden>
+        {showLabel && (
+          <div className="text-[10px] uppercase tracking-widest text-text-dim mb-2 font-mono">
+            Advertisement
+          </div>
+        )}
+        <div
+          className="w-full rounded-xl border border-dashed border-border-strong bg-bg-2/30 grid place-items-center text-text-dim text-xs font-mono"
+          style={{ minHeight: 120, ...style }}
+        >
+          AdSense slot · unconfigured
+        </div>
+      </div>
+    );
+  }
+
+  const isPlaceholder = !adsConfigured;
 
   if (isPlaceholder) {
     return (

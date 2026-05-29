@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Reveal, Stagger } from "@/components/motion/reveal";
 import { Eyebrow, Badge, Card } from "@/components/ui/primitives";
 import { AdUnit } from "@/components/adsense/google-adsense";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd, pageMetadata } from "@/lib/seo/metadata";
 import { GUIDES, guidesByCategory } from "@/lib/content/guides";
@@ -65,7 +66,7 @@ export default function GuidesIndex() {
             ))}
           </Stagger>
           {ci === 1 && (
-            <div className="mt-12"><AdUnit slot="5678901234" /></div>
+            <div className="mt-12"><AdUnit slot={AD_SLOTS.feed} /></div>
           )}
         </section>
       ))}

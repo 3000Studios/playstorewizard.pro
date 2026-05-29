@@ -42,6 +42,14 @@ PAYPAL_ENV = "live"
 # LICENSE_SIGNING_SECRET
 # ADMIN_ACCESS_TOKEN
 #
+# Optional AdSense ad-unit slot IDs (set as [vars] once real units exist in the
+# AdSense dashboard; until then ad units render nothing in production):
+# NEXT_PUBLIC_AD_SLOT_HOME
+# NEXT_PUBLIC_AD_SLOT_FEED
+# NEXT_PUBLIC_AD_SLOT_ARTICLE
+# NEXT_PUBLIC_AD_SLOT_FEATURES
+# NEXT_PUBLIC_AD_SLOT_FAQ
+#
 # Optional:
 # STRIPE_PRICE_PRO_MONTHLY
 # STRIPE_PRICE_PRO_YEARLY
