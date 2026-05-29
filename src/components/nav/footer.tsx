@@ -17,6 +17,7 @@ const FOOTER_COLUMNS = [
     heading: "Resources",
     links: [
       { href: "/guides", label: "All guides" },
+      { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },
       { href: "/wizard", label: "Start the wizard" },
     ],
@@ -35,6 +36,7 @@ const FOOTER_COLUMNS = [
       { href: "/terms", label: "Terms of service" },
       { href: "/cookies", label: "Cookies" },
       { href: "/disclaimer", label: "Disclaimer" },
+      { href: "/refunds", label: "Refund policy" },
     ],
   },
 ];
