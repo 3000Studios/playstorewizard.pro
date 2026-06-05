@@ -9,12 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { useLicense } from "@/lib/license-store";
 import type { SignedLicense } from "@/lib/pro/tiers";
+import { useAuth } from "@/components/auth/auth-provider";
+import { saveLicenseToFirestore } from "@/lib/firebase/license";
 
 type Status = "loading" | "ok" | "error";
 
 export function SuccessClient() {
   const search = useSearchParams();
   const setLicense = useLicense((s) => s.setLicense);
+  const { user } = useAuth();
 
   const [status, setStatus] = React.useState<Status>("loading");
   const [message, setMessage] = React.useState<string>("Confirming your payment…");
@@ -44,6 +47,9 @@ export function SuccessClient() {
           }
           const signed = (await r.json()) as SignedLicense;
           await setLicense(signed);
+          if (user) {
+            await saveLicenseToFirestore(user.uid, signed).catch(() => {/* non-fatal */});
+          }
           setStatus("ok");
           setMessage(`You're on the ${signed.payload.tier === "studio" ? "Studio" : "Pro"} plan.`);
           return;
@@ -79,6 +85,9 @@ export function SuccessClient() {
           }
           const signed = (await verRes.json()) as SignedLicense;
           await setLicense(signed);
+          if (user) {
+            await saveLicenseToFirestore(user.uid, signed).catch(() => {/* non-fatal */});
+          }
           setStatus("ok");
           setMessage(`You're on the ${signed.payload.tier === "studio" ? "Studio" : "Pro"} plan.`);
           return;
@@ -95,7 +104,7 @@ export function SuccessClient() {
         setMessage(e instanceof Error ? e.message : "Activation failed");
       }
     })();
-  }, [search, setLicense]);
+  }, [search, setLicense, user]);
 
   return (
     <section className="container max-w-2xl py-24">

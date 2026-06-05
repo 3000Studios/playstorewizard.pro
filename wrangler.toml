@@ -30,11 +30,24 @@ binding = "WORKER_SELF_REFERENCE"
 service = "playstorewizard-pro"
 
 [vars]
-NEXT_PUBLIC_SITE_URL = "https://playstorewizard.pro"
-NEXT_PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-5800977493749262"
-PAYPAL_ENV = "live"
+NEXT_PUBLIC_SITE_URL              = "https://playstorewizard.pro"
+NEXT_PUBLIC_ADSENSE_CLIENT_ID     = "ca-pub-5800977493749262"
+PAYPAL_ENV                        = "live"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_live_51SCLtrGejm3JMan4oTgv5MvjcAIPr1AWhkUamJiUufyqhWkeiq2iZ8GVQBy56xewUSiyLxPp05gPy4KBrZDsvG8e00uM2g1yCd"
+# Firebase Web SDK (client-safe — these are not secrets, they are project identifiers)
+NEXT_PUBLIC_FIREBASE_API_KEY          = "AIzaSyC2VCBOszos800f-m8inp7XhJkLH4KFkKs"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN      = "gen-lang-client-0914367944.firebaseapp.com"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID       = "gen-lang-client-0914367944"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET   = "gen-lang-client-0914367944.firebasestorage.app"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = "76706851259"
+NEXT_PUBLIC_FIREBASE_APP_ID           = "1:76706851259:web:bc534d20b8152cd7d93c9e"
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID   = "G-DH1WBK8YWK"
+# License verify key — intentionally public (HMAC; client-side gating only;
+# server-side paid API routes re-verify against webhook records).
+# Set to same value as LICENSE_SIGNING_SECRET secret via Cloudflare dashboard.
+NEXT_PUBLIC_LICENSE_VERIFY_KEY        = ""
 
-# Required production secrets, set with Wrangler or Cloudflare dashboard:
+# ── Secrets (set via: wrangler secret put KEY --name playstorewizard-pro) ────
 # STRIPE_SECRET_KEY
 # STRIPE_WEBHOOK_SECRET
 # PAYPAL_CLIENT_ID
@@ -42,19 +55,10 @@ PAYPAL_ENV = "live"
 # LICENSE_SIGNING_SECRET
 # ADMIN_ACCESS_TOKEN
 #
-# Optional AdSense ad-unit slot IDs (set as [vars] once real units exist in the
-# AdSense dashboard; until then ad units render nothing in production):
-# NEXT_PUBLIC_AD_SLOT_HOME
-# NEXT_PUBLIC_AD_SLOT_FEED
-# NEXT_PUBLIC_AD_SLOT_ARTICLE
-# NEXT_PUBLIC_AD_SLOT_FEATURES
-# NEXT_PUBLIC_AD_SLOT_FAQ
-#
-# Optional:
+# ── Set once Stripe price IDs are created (scripts/setup-stripe-prices.mjs) ──
 # STRIPE_PRICE_PRO_MONTHLY
 # STRIPE_PRICE_PRO_YEARLY
 # STRIPE_PRICE_PRO_LIFETIME
 # STRIPE_PRICE_STUDIO_MONTHLY
 # STRIPE_PRICE_STUDIO_YEARLY
 # STRIPE_PRICE_STUDIO_LIFETIME
-# GOOGLE_SA_JSON

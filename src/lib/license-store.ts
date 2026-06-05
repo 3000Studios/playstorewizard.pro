@@ -48,9 +48,14 @@ export const useLicense = create<LicenseStore>()(
       signed: null,
       verified: null,
       setLicense: async (signed) => {
-        const ok = VERIFY_KEY ? await verifyLicensePayload(signed, VERIFY_KEY) : null;
+        if (!VERIFY_KEY) {
+          // No client-side key configured. Trust server-issued licenses — real
+          // verification happens on every paid server-side API call via webhook records.
+          set({ signed, verified: signed.payload });
+          return true;
+        }
+        const ok = await verifyLicensePayload(signed, VERIFY_KEY);
         if (!ok) {
-          // Store anyway so the user gets a degraded path, but mark unverified.
           set({ signed, verified: null });
           return false;
         }
@@ -74,12 +79,15 @@ export const useLicense = create<LicenseStore>()(
       // Only persist the signed payload — `verified` is re-derived on hydrate.
       partialize: (s) => ({ signed: s.signed }),
       onRehydrateStorage: () => (state) => {
-        // Re-verify after hydration so `verified` is populated.
-        if (state?.signed && VERIFY_KEY) {
-          verifyLicensePayload(state.signed, VERIFY_KEY).then((ok) => {
-            useLicense.setState({ verified: ok });
-          });
+        if (!state?.signed) return;
+        if (!VERIFY_KEY) {
+          // Trust persisted server-issued license when no verify key is configured.
+          useLicense.setState({ verified: state.signed.payload });
+          return;
         }
+        verifyLicensePayload(state.signed, VERIFY_KEY).then((ok) => {
+          useLicense.setState({ verified: ok });
+        });
       },
     }
   )

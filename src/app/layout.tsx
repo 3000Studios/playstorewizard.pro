@@ -14,6 +14,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
 import { subdomainFromHost } from "@/lib/sites/host";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
+import { AuthProvider } from "@/components/auth/auth-provider";
 
 const ADSENSE_CLIENT_ID =
   process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-5800977493749262";
@@ -147,26 +148,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           Skip to main content
         </a>
 
-        {isHostedUserSite ? (
-          <main id="main" className="min-h-screen">
-            {children}
-          </main>
-        ) : (
-          <>
-            <AuroraBackground />
-            <div className="relative z-10 flex flex-col min-h-screen">
-              <TopNav />
-              <main id="main" className="flex-1">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <AmbientAudio />
-            <SupportChat />
-            <AdSenseScript />
-            <ConsentBanner />
-          </>
-        )}
+        <AuthProvider>
+          {isHostedUserSite ? (
+            <main id="main" className="min-h-screen">
+              {children}
+            </main>
+          ) : (
+            <>
+              <AuroraBackground />
+              <div className="relative z-10 flex flex-col min-h-screen">
+                <TopNav />
+                <main id="main" className="flex-1">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+              <AmbientAudio />
+              <SupportChat />
+              <AdSenseScript />
+              <ConsentBanner />
+            </>
+          )}
+        </AuthProvider>
       </body>
     </html>
   );
