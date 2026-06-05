@@ -17,7 +17,7 @@ export function getStripe(): Stripe {
   }
   if (_stripe) return _stripe;
   _stripe = new Stripe(key, {
-    apiVersion: "2026-04-22.dahlia",
+    apiVersion: "2026-05-27.dahlia",
     httpClient: Stripe.createFetchHttpClient(),
     typescript: true,
   });
