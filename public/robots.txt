@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /wizard/
-Sitemap: https://playstorewizard.pro/sitemap.xml
+
+Sitemap: https://Playstorewizard.pro/sitemap.xml
