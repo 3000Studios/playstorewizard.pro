@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardContent } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
 import { useWizard } from "@/lib/store";
-import { useTier } from "@/lib/license-store";
 import { STEPS, type StepDef, nextStep, prevStep } from "@/lib/steps";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
@@ -22,8 +21,6 @@ import { StepPricing } from "./steps/pricing";
 import { StepRelease } from "./steps/release";
 import { StepReview } from "./steps/review";
 
-import { WizardPaywall } from "./wizard-paywall";
-
 const STEP_COMPONENTS: Record<string, React.ComponentType> = {
   "app-info": StepAppInfo,
   "bundle": StepBundle,
@@ -39,79 +36,54 @@ const STEP_COMPONENTS: Record<string, React.ComponentType> = {
   "review": StepReview,
 };
 
-/**
- * Free users get steps 1-6 (app-info -> content-rating). The wall hits at
- * step 7 (data-safety) — the most tedious step, where Pro provides the most
- * obvious value. All wizard data persists to localStorage, so the user
- * doesn't lose their work when they hit the wall; they pick up exactly
- * where they left off after upgrading.
- */
-const FREE_TIER_LAST_STEP = 6;
-
 export function WizardStep({ step }: { step: StepDef }) {
   const router = useRouter();
   const markComplete = useWizard((s) => s.markComplete);
-  const tier = useTier();
   const Component = STEP_COMPONENTS[step.slug];
   const prev = prevStep(step.slug);
   const next = nextStep(step.slug);
-
-  const locked = tier === "free" && step.num > FREE_TIER_LAST_STEP;
-  const nextIsLockedTransition = tier === "free" && step.num === FREE_TIER_LAST_STEP;
 
   return (
     <Card>
       <CardHeader>
         <div className="font-mono text-[11px] uppercase tracking-widest text-text-muted mb-2">
           Step {step.num} of {STEPS.length}
-          {locked && <span className="ml-2 text-amber-400">· Pro required</span>}
         </div>
         <h1 className="font-display font-bold text-3xl tracking-tight">{step.title}</h1>
         <p className="text-sm text-text-muted mt-2 leading-relaxed">{step.description}</p>
       </CardHeader>
       <CardContent>
-        {locked ? (
-          <WizardPaywall stepNum={step.num} />
-        ) : (
-          <>
-            {Component ? <Component /> : <div className="text-text-muted">Step not implemented.</div>}
+        {Component ? <Component /> : <div className="text-text-muted">Step not implemented.</div>}
 
-            <div className="flex items-center justify-between gap-3 pt-6 mt-8 border-t border-border">
-              <Button
-                variant="outline"
-                disabled={!prev}
-                onClick={() => prev && router.push(`/wizard/${prev}`)}
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </Button>
-              <Button
-                variant="aurora"
-                onClick={() => {
-                  markComplete(step.num);
-                  if (next) router.push(`/wizard/${next}`);
-                }}
-              >
-                {nextIsLockedTransition ? (
-                  <>
-                    Continue to Data Safety
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                ) : next ? (
-                  <>
-                    Next
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                ) : (
-                  <>
-                    <Check className="h-4 w-4" />
-                    Done
-                  </>
-                )}
-              </Button>
-            </div>
-          </>
-        )}
+        <div className="flex items-center justify-between gap-3 pt-6 mt-8 border-t border-border">
+          <Button
+            variant="outline"
+            disabled={!prev}
+            onClick={() => prev && router.push(`/wizard/${prev}`)}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Button>
+          <Button
+            variant="aurora"
+            onClick={() => {
+              markComplete(step.num);
+              if (next) router.push(`/wizard/${next}`);
+            }}
+          >
+            {next ? (
+              <>
+                Next
+                <ArrowRight className="h-4 w-4" />
+              </>
+            ) : (
+              <>
+                <Check className="h-4 w-4" />
+                Done
+              </>
+            )}
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

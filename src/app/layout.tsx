@@ -1,47 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { headers } from "next/headers";
-import { Bricolage_Grotesque, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { TopNav } from "@/components/nav/top-nav";
 import { Footer } from "@/components/nav/footer";
 import { AuroraBackground } from "@/components/bg/aurora-background";
-import { AmbientAudio } from "@/components/audio/ambient-audio";
-import { SupportChat } from "@/components/support/support-chat";
 import { AdSenseScript } from "@/components/adsense/google-adsense";
 import { ConsentBanner } from "@/components/consent/consent-banner";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
-import { subdomainFromHost } from "@/lib/sites/host";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
-import { AuthProvider } from "@/components/auth/auth-provider";
 
-const ADSENSE_CLIENT_ID =
-  process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-5800977493749262";
-
-// Self-hosted via next/font — eliminates render-blocking external font CSS,
-// auto-preloads, and prevents layout shift. Free, no per-request cost.
-const fontDisplay = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-  variable: "--font-display",
-});
-
-const fontSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-serif",
-});
-
-const fontMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-  variable: "--font-mono",
-});
+const ADSENSE_CLIENT_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -63,9 +32,9 @@ export const metadata: Metadata = {
     "android compliance",
     "play store wizard",
   ],
-  authors: [{ name: "Mr. J. Swain" }, { name: "3000 Studios" }],
-  creator: "Mr. J. Swain (3000 Studios)",
-  publisher: "3000 Studios",
+  authors: [{ name: "3000Studios" }],
+  creator: "3000Studios",
+  publisher: "3000Studios",
   formatDetection: { email: false, telephone: false, address: false },
   alternates: { canonical: SITE_URL },
   openGraph: {
@@ -96,19 +65,10 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: [
-      { url: "/icons/icon.svg", type: "image/svg+xml" },
-      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: "/icons/apple-touch-icon.png",
-    shortcut: "/icons/icon.svg",
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
   },
   other: {
-    "copyright": `© ${new Date().getFullYear()} Mr. J. Swain · 3000 Studios. All rights reserved.`,
-    "rights-owner": "Mr. J. Swain (3000 Studios)",
-    "designer": "Mr. J. Swain",
-    "owner": "3000 Studios",
     ...(ADSENSE_CLIENT_ID && ADSENSE_CLIENT_ID !== "ca-pub-0000000000000000"
       ? { "google-adsense-account": ADSENSE_CLIENT_ID }
       : {}),
@@ -123,20 +83,15 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const host = (await headers()).get("host");
-  const isHostedUserSite = Boolean(subdomainFromHost(host));
-
-  const fontVars = `${fontDisplay.variable} ${fontSerif.variable} ${fontMono.variable}`;
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${fontVars}`}>
+    <html lang="en" className="dark">
       <head>
-        {/* Google Consent Mode v2 — deny non-essential storage by default so
-            AdSense sets no ad cookies before the user chooses (see ConsentBanner). */}
         <Script id="consent-default" strategy="beforeInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{var c=localStorage.getItem('psw-consent');if(c==='granted'){gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});}}catch(e){}`}
+          {"window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{if(localStorage.getItem('psw-consent')==='granted'){gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});}}catch(e){}"}
         </Script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <JsonLd data={[buildOrganizationLd(), buildSoftwareAppLd()]} />
       </head>
       <body className="bg-bg-0 text-text antialiased min-h-screen flex flex-col">
@@ -148,28 +103,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           Skip to main content
         </a>
 
-        <AuthProvider>
-          {isHostedUserSite ? (
-            <main id="main" className="min-h-screen">
-              {children}
-            </main>
-          ) : (
-            <>
-              <AuroraBackground />
-              <div className="relative z-10 flex flex-col min-h-screen">
-                <TopNav />
-                <main id="main" className="flex-1">
-                  {children}
-                </main>
-                <Footer />
-              </div>
-              <AmbientAudio />
-              <SupportChat />
-              <AdSenseScript />
-              <ConsentBanner />
-            </>
-          )}
-        </AuthProvider>
+        {/* Animated background — fixed, z-0 */}
+        <AuroraBackground />
+
+        {/* Content layer */}
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <TopNav />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
+
+        {/* AdSense library (no-op when unconfigured) */}
+        <AdSenseScript />
+        <ConsentBanner />
       </body>
     </html>
   );

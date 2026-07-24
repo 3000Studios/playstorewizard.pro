@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { headers } from "next/headers";
-import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, Eyebrow, Badge } from "@/components/ui/primitives";
 import { Reveal, Stagger } from "@/components/motion/reveal";
@@ -8,9 +6,6 @@ import { AdUnit } from "@/components/adsense/google-adsense";
 import { AD_SLOTS } from "@/lib/adsense/slots";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildBreadcrumbLd } from "@/lib/seo/metadata";
-import { SitePreview } from "@/components/sites/site-preview";
-import { subdomainFromHost } from "@/lib/sites/host";
-import { getSite } from "@/lib/sites/store";
 import {
   Sparkles,
   Rocket,
@@ -24,15 +19,7 @@ import {
   Check,
 } from "lucide-react";
 
-export default async function HomePage() {
-  const host = (await headers()).get("host");
-  const subdomain = subdomainFromHost(host);
-  if (subdomain) {
-    const site = await getSite(subdomain);
-    if (site?.status === "published") return <SitePreview site={site} framed={false} />;
-    notFound();
-  }
-
+export default function HomePage() {
   return (
     <>
       <JsonLd data={buildBreadcrumbLd([{ name: "Home", path: "/" }])} />
@@ -226,31 +213,14 @@ export default async function HomePage() {
 
           <Reveal delay={100}>
             <Card className="p-8">
-              <Eyebrow>Honest disclosure</Eyebrow>
+              <Eyebrow>Built in public</Eyebrow>
               <h3 className="mt-3 font-display font-bold text-2xl tracking-tight">
-                A new tool, built in public.
+                A new tool, without invented testimonials.
               </h3>
               <p className="mt-4 text-sm text-text-muted leading-relaxed">
-                Playstore Wizard launched on May 13, 2026. Rather than dress up the early days with stock
-                testimonials, we&apos;re shipping fast, listening hard, and crediting real users by name as
-                they ship. If you publish your app through the wizard and want to share what worked,
-                email <a className="text-indigo-300 hover:text-indigo-200 underline decoration-indigo-500/40 underline-offset-4" href="mailto:hello@playstorewizard.pro">hello@playstorewizard.pro</a>{" "}
-                and we&apos;ll feature you here — with a link to your app.
+                We publish practical Google Play guidance and improve the wizard from real policy changes and user feedback.
+                When customers choose to share their experience, we&apos;ll feature it with their permission.
               </p>
-              <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-                <div>
-                  <div className="font-display font-bold text-2xl">15</div>
-                  <div className="text-[10px] uppercase tracking-widest text-text-muted">Guides</div>
-                </div>
-                <div>
-                  <div className="font-display font-bold text-2xl">22</div>
-                  <div className="text-[10px] uppercase tracking-widest text-text-muted">Rules checked</div>
-                </div>
-                <div>
-                  <div className="font-display font-bold text-2xl">$0</div>
-                  <div className="text-[10px] uppercase tracking-widest text-text-muted">To start</div>
-                </div>
-              </div>
             </Card>
           </Reveal>
         </div>

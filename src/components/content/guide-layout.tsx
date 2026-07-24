@@ -18,7 +18,7 @@ interface GuideLayoutProps {
   midAdAfterSection?: number;
 }
 
-export function GuideLayout({ slug, children }: GuideLayoutProps) {
+export function GuideLayout({ slug, children, midAdSlot = AD_SLOTS.article }: GuideLayoutProps) {
   const guide = getGuide(slug);
   if (!guide) return null;
   const related = getRelatedGuides(slug, 3);
@@ -33,7 +33,6 @@ export function GuideLayout({ slug, children }: GuideLayoutProps) {
             path: `/guides/${guide.slug}`,
             datePublished: guide.publishedAt,
             dateModified: guide.updatedAt,
-            author: "Mr. J. Swain",
           }),
           buildBreadcrumbLd([
             { name: "Home", path: "/" },
@@ -64,14 +63,6 @@ export function GuideLayout({ slug, children }: GuideLayoutProps) {
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-text-muted">
-            <span>
-              By{" "}
-              <Link href="/about" className="text-text hover:text-indigo-200 underline decoration-indigo-500/30 underline-offset-4">
-                Mr. J. Swain
-              </Link>
-              , 3000 Studios
-            </span>
-            <span className="text-text-dim">·</span>
             <span className="inline-flex items-center gap-1.5">
               <Clock className="h-3.5 w-3.5" />
               {guide.readingTimeMin} min read
@@ -79,7 +70,7 @@ export function GuideLayout({ slug, children }: GuideLayoutProps) {
             <span className="text-text-dim">·</span>
             <span className="inline-flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
-              <time dateTime={guide.updatedAt}>Updated {formatDate(guide.updatedAt)}</time>
+              Updated {formatDate(guide.updatedAt)}
             </span>
             <span className="text-text-dim">·</span>
             <div className="flex flex-wrap gap-1.5">
@@ -98,7 +89,7 @@ export function GuideLayout({ slug, children }: GuideLayoutProps) {
           <div className="prose-guide">{children}</div>
         </Reveal>
 
-        <InArticleAd slot={AD_SLOTS.article} className="my-12" />
+        <InArticleAd slot={midAdSlot} className="my-12" />
 
         <Reveal>
           <div className="mt-16 pt-8 border-t border-border">
