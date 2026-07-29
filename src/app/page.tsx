@@ -165,7 +165,7 @@ export default function HomePage() {
             ["09", "Privacy policy", "Auto-generated and hostable."],
             ["10", "Pricing", "Price, fees, countries."],
             ["11", "Release", "Internal, closed, open, production."],
-            ["12", "Review & submit", "Final check. One click. Done."],
+            ["12", "Review & launch plan", "Final check before Play Console."],
           ].map(([num, title, body], i) => (
             <Reveal key={num} delay={i * 40}>
               <div className="flex items-start gap-3 p-4 rounded-xl border border-border bg-bg-2/40 hover-lift">

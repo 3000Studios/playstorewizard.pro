@@ -53,7 +53,7 @@ export function Footer() {
               <span className="font-display font-bold text-base">Playstore Wizard</span>
             </Link>
             <p className="text-sm text-text-muted max-w-xs leading-relaxed">
-              A guided publishing studio for Google Play. Compliance, listings, and submission — done right the first time.
+              A guided publishing studio for Google Play. Organize compliance, listings, and launch details before submitting in Play Console.
             </p>
             <p className="text-xs text-text-dim mt-6 font-mono">
               © {new Date().getFullYear()} 3000Studios.
