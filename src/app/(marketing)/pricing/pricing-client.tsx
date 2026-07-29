@@ -271,7 +271,7 @@ function CheckoutButton({
         aria-label={`Pay with card`}
       >
         <Sparkles className="h-4 w-4" />
-        {loading === "stripe" ? "Loading…" : "Pay with card"}
+        {loading === "stripe" ? "Loading…" : billing === "monthly" ? "Start monthly plan" : billing === "yearly" ? "Start yearly plan" : "Get lifetime access"}
       </Button>
 
       {showPaypal && (

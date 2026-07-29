@@ -49,8 +49,8 @@ export default function HomePage() {
 
           <Reveal delay={160}>
             <p className="mt-8 text-center text-lg sm:text-xl text-text-muted max-w-2xl mx-auto leading-relaxed text-pretty">
-              A guided publishing studio that handles compliance, assets, descriptions, and the upload itself.
-              So you write the app — not the paperwork.
+              A guided publishing studio that organizes compliance, assets, and store details before you submit in Play Console.
+              So you spend less time chasing paperwork.
             </p>
           </Reveal>
 
@@ -78,9 +78,9 @@ export default function HomePage() {
             initial={300}
           >
             {[
-              { num: "12", unit: "steps", label: "Idea to live" },
+              { num: "12", unit: "steps", label: "Launch plan" },
+              { num: "6", unit: "free", label: "Steps to explore" },
               { num: "$0", unit: "", label: "To get started" },
-              { num: "~3", unit: "weeks", label: "Realistic timeline" },
               { num: "22", unit: "rules", label: "Auto-checked" },
             ].map((s) => (
               <div className="text-center" key={s.label}>
@@ -117,8 +117,8 @@ export default function HomePage() {
             { icon: ImageIcon, title: "Asset auto-resize", body: "Drop one icon and a few screenshots. We output every Play Store size — phone, tablets, feature graphic, TV — in your browser. Zero server cost." },
             { icon: Brain, title: "AI listings", body: "One sentence in, full listing out. Short description, 4000-char long description, ASO keywords. Validated against length limits before you submit." },
             { icon: Workflow, title: "Data Safety walkthrough", body: "The form everyone fears, broken down into yes/no questions. Answers feed the privacy policy generator automatically." },
-            { icon: Send, title: "One-click submit", body: "Direct Play Developer API integration. Skip the manual upload entirely once you're set up. Schedule releases for later." },
-            { icon: Zap, title: "Realistic timelines", body: "We show you the real path: review windows, the 14-day closed-test gate, production access wait. No surprises on day 14." },
+            { icon: Send, title: "Submission-ready plan", body: "Review your launch details in one place, then submit through your own Play Console account." },
+            { icon: Zap, title: "Launch requirements", body: "Plan around review windows, the 14-day closed-test gate, and production access requirements." },
           ].map((f, i) => (
             <Reveal key={f.title} delay={i * 60}>
               <Card className="p-6 h-full hover-lift">
@@ -243,7 +243,7 @@ export default function HomePage() {
                 Your app deserves a <span className="accent-italic text-aurora">smoother launch.</span>
               </h2>
               <p className="mt-5 text-text-muted text-lg max-w-xl mx-auto">
-                Open the wizard, drop your AAB, and watch it fill in everything Google asks for.
+                Start with the first six steps free, then unlock the full launch plan when you&apos;re ready.
               </p>
               <Link href="/wizard" className="inline-block mt-8">
                 <Button variant="aurora" size="xl">

@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardContent } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
 import { useWizard } from "@/lib/store";
+import { useTier } from "@/lib/license-store";
 import { STEPS, type StepDef, nextStep, prevStep } from "@/lib/steps";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { WizardPaywall } from "./wizard-paywall";
 
 import { StepAppInfo } from "./steps/app-info";
 import { StepBundle } from "./steps/bundle";
@@ -39,9 +41,14 @@ const STEP_COMPONENTS: Record<string, React.ComponentType> = {
 export function WizardStep({ step }: { step: StepDef }) {
   const router = useRouter();
   const markComplete = useWizard((s) => s.markComplete);
+  const tier = useTier();
   const Component = STEP_COMPONENTS[step.slug];
   const prev = prevStep(step.slug);
   const next = nextStep(step.slug);
+
+  if (tier === "free" && step.num >= 7) {
+    return <WizardPaywall stepNum={step.num} />;
+  }
 
   return (
     <Card>

@@ -9,18 +9,12 @@ import { useWizard } from "@/lib/store";
 import { STEPS } from "@/lib/steps";
 
 const PRO_FEATURES_LEFT = [
-  "Data Safety form auto-filler (saves hours)",
-  "Privacy Policy generator + hosting",
-  "Pricing + 175-country rollout config",
-  "Release track scheduler (internal → production)",
-  "Final compliance check before submit",
-  "One-click submit to Play Console",
-];
-
-const SOCIAL_PROOF = [
-  { metric: "98%", label: "approval on first submit" },
-  { metric: "<14 days", label: "avg. closed-testing time" },
-  { metric: "4.9 / 5", label: "developer rating" },
+  "Data Safety walkthrough and saved answers",
+  "Privacy Policy generator",
+  "Pricing and country rollout planning",
+  "Release-track planning and release notes",
+  "Final compliance review before Play Console",
+  "Unlimited apps and advanced listing tools",
 ];
 
 /**
@@ -102,15 +96,15 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
 
           <Eyebrow>Almost there</Eyebrow>
           <h2 className="mt-2 font-display font-bold text-3xl tracking-tight text-balance">
-            Unlock Pro to finish the
+            Unlock Pro to finish your
             <br />
-            <span className="accent-italic text-aurora">Data Safety form and submit.</span>
+            <span className="accent-italic text-aurora">launch plan with confidence.</span>
           </h2>
 
           <p className="mt-5 text-text-muted leading-relaxed max-w-xl">
-            You&apos;ve built your listing, sized your assets, and answered the content rating
-            questionnaire. Pro handles the rest — including the Data Safety form that takes most
-            developers <strong className="text-text">3-5 hours by hand</strong>.
+            Your free launch plan covers the first six setup steps. Pro keeps the rest of your
+            release details together: Data Safety, audience, privacy, pricing, release planning,
+            and a final readiness review before you submit in Play Console.
           </p>
 
           {/* What Pro unlocks from here */}
@@ -190,19 +184,9 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
             </div>
           )}
 
-          {/* Social proof + reassurance */}
-          <div className="mt-7 pt-6 border-t border-border grid grid-cols-3 gap-4">
-            {SOCIAL_PROOF.map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="font-display font-bold text-xl text-aurora">{s.metric}</div>
-                <div className="text-[11px] text-text-muted mt-0.5 leading-tight">{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-5 flex items-center gap-2 text-xs text-text-dim">
+          <div className="mt-7 pt-6 border-t border-border flex items-center gap-2 text-xs text-text-dim">
             <ShieldCheck className="h-3.5 w-3.5" />
-            <span>Cancel anytime · Free tier stays usable · All sales final</span>
+            <span>Secure checkout via Stripe · Cancel anytime · Free tier stays usable</span>
           </div>
           <div className="mt-1.5 flex items-center gap-2 text-xs text-text-dim">
             <Zap className="h-3.5 w-3.5" />
