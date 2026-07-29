@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE_NAME}`,
   },
   description:
-    "A guided publishing studio for Google Play. Compliance, listings, asset auto-resize, AI descriptions, one-click submit. Free to start.",
+    "A guided publishing studio for Google Play. Organize compliance, listings, assets, and launch details before submitting in Play Console. Free to start.",
   keywords: [
     "google play",
     "play store",
