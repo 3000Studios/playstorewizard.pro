@@ -14,7 +14,7 @@ const PRO_FEATURES_LEFT = [
   "Pricing and country rollout planning",
   "Release-track planning and release notes",
   "Final compliance review before Play Console",
-  "Unlimited apps and advanced listing tools",
+  "A complete, saved 12-step launch plan",
 ];
 
 /**
@@ -24,17 +24,17 @@ const PRO_FEATURES_LEFT = [
  */
 export function WizardPaywall({ stepNum }: { stepNum: number }) {
   const data = useWizard();
-  const [busy, setBusy] = React.useState<"pro-monthly" | "studio-monthly" | null>(null);
+  const [busy, setBusy] = React.useState<"pro-monthly" | null>(null);
   const [err, setErr] = React.useState<string | null>(null);
 
-  async function checkoutStripe(tier: "pro" | "studio") {
-    setBusy(tier === "pro" ? "pro-monthly" : "studio-monthly");
+  async function checkoutStripe() {
+    setBusy("pro-monthly");
     setErr(null);
     try {
       const r = await fetch("/api/checkout/stripe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier, billing: "monthly" }),
+        body: JSON.stringify({ tier: "pro", billing: "monthly" }),
       });
       const d = (await r.json()) as { url?: string; error?: string };
       if (!r.ok || !d.url) throw new Error(d.error ?? "Could not start checkout");
@@ -118,7 +118,7 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
           </div>
 
           {/* Plan picker */}
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
+          <div className="mt-8 max-w-md">
             {/* Pro card */}
             <div className="rounded-xl border-2 border-indigo-400/50 bg-bg-2 p-5 relative shadow-xl shadow-indigo-500/10">
               <div className="absolute -top-2.5 left-4">
@@ -127,7 +127,7 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
                 </Badge>
               </div>
               <div className="font-display font-semibold text-lg">Pro</div>
-              <p className="text-xs text-text-muted">For indie devs shipping multiple apps</p>
+              <p className="text-xs text-text-muted">For developers completing a Play Store launch plan</p>
               <div className="mt-3 flex items-baseline gap-1">
                 <span className="font-display font-bold text-4xl tracking-tight">$9.99</span>
                 <span className="text-sm text-text-muted accent-italic">/ mo</span>
@@ -138,7 +138,7 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
                   variant="aurora"
                   size="md"
                   className="w-full"
-                  onClick={() => checkoutStripe("pro")}
+                  onClick={checkoutStripe}
                   disabled={busy !== null}
                 >
                   <Sparkles className="h-4 w-4" />
@@ -150,32 +150,6 @@ export function WizardPaywall({ stepNum }: { stepNum: number }) {
               </div>
             </div>
 
-            {/* Studio card */}
-            <div className="rounded-xl border border-border bg-bg-2/60 p-5">
-              <div className="font-display font-semibold text-lg">Studio</div>
-              <p className="text-xs text-text-muted">For agencies + team workflows</p>
-              <div className="mt-3 flex items-baseline gap-1">
-                <span className="font-display font-bold text-4xl tracking-tight">$49.99</span>
-                <span className="text-sm text-text-muted accent-italic">/ mo</span>
-              </div>
-              <p className="text-[11px] text-text-dim font-mono mt-1">
-                Team mode · white-label · 5 seats
-              </p>
-              <div className="mt-4 space-y-2">
-                <Button
-                  variant="outline"
-                  size="md"
-                  className="w-full"
-                  onClick={() => checkoutStripe("studio")}
-                  disabled={busy !== null}
-                >
-                  Upgrade to Studio — $49.99/mo
-                </Button>
-                <p className="text-[11px] text-text-dim text-center">
-                  Secure card checkout via Stripe. Cancel anytime.
-                </p>
-              </div>
-            </div>
           </div>
 
           {err && (

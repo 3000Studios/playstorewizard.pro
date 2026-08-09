@@ -10,36 +10,11 @@ import { TIERS, ANNUAL_PRICES, LIFETIME_PRICES } from "@/lib/pro/tiers";
 import { cn } from "@/lib/utils";
 
 const FEATURE_LABELS: Record<string, string> = {
-  "single-app": "1 app",
-  "unlimited-apps": "Unlimited apps",
   "ai-description-en": "AI listings (English)",
-  "ai-description-multi-lang": "AI listings (50+ languages)",
-  "ai-translate-listing": "Auto-translate listings",
-  "ai-review-replies": "AI review reply drafts",
-  "ai-screenshot-captions": "AI screenshot captions",
-  "ai-aso-keywords": "ASO keyword analysis",
-  "ai-aso-monitoring": "ASO monitoring",
   "asset-resize": "Asset auto-resize",
-  "asset-device-frames": "Device-frame mockups",
-  "asset-screenshot-capture-emulator": "Emulator screenshot capture",
   "asset-feature-graphic-gen": "Feature graphic generator",
   "manual-publish": "Manual publish",
-  "auto-publish": "Auto-publish",
-  "scheduled-release": "Scheduled releases",
-  "staged-rollout-control": "Staged rollout control",
-  "multi-track-management": "Multi-track management",
   "compliance-check": "Compliance auto-check",
-  "compliance-monitoring": "Compliance monitoring",
-  "policy-change-alerts": "Policy-change alerts",
-  "basic-stats": "Basic stats",
-  "review-tracking": "Review tracking",
-  "competitor-tracking": "Competitor tracking",
-  "keyword-ranking": "Keyword ranking",
-  "ab-test-listings": "A/B test listings",
-  "team-mode": "Team mode (5 seats)",
-  "white-label": "White-label",
-  "bulk-update": "Bulk update across apps",
-  "client-mode": "Client workspaces",
 };
 
 type Billing = "monthly" | "yearly" | "lifetime";
@@ -75,12 +50,12 @@ export function PricingClient() {
           <div className="text-center max-w-2xl mx-auto">
             <Eyebrow>Pricing</Eyebrow>
             <h1 className="mt-3 font-display font-bold text-5xl sm:text-6xl tracking-tight text-balance">
-              Free for your first app.<br />
-              <span className="accent-italic text-aurora">Pro for every one after.</span>
+              Start with six steps.<br />
+              <span className="accent-italic text-aurora">Finish all twelve with Pro.</span>
             </h1>
             <p className="mt-6 text-lg text-text-muted">
-              Everything you need to ship is free, forever. Pro adds automation, multi-language listings,
-              and the analytics that move the needle.
+              Use the free steps to organize your app, assets, listing, category, and content rating.
+              Pro unlocks the six final launch-planning steps before you submit in Play Console.
             </p>
           </div>
         </Reveal>
@@ -112,8 +87,8 @@ export function PricingClient() {
           </div>
         </Reveal>
 
-        <Stagger className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5" step={80}>
-          {TIERS.map((tier) => {
+        <Stagger className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto" step={80}>
+          {TIERS.filter((tier) => tier.id !== "studio").map((tier) => {
             const isFeatured = tier.id === "pro";
             const price = priceFor(tier.id as "free" | "pro" | "studio");
             return (
@@ -172,23 +147,19 @@ export function PricingClient() {
             {[
               {
                 q: "Is the Free tier really free forever?",
-                a: "Yes. The Free tier covers one app and includes compliance checks, AI listings (English), asset resizing, manual publishing, and review tracking. No credit card required, no time limit.",
+                a: "Yes. The Free tier includes the first six steps: app basics, bundle review, graphics and screenshots, an English store listing, category and tags, and content rating. No card is required to begin.",
               },
               {
                 q: "Can I cancel anytime?",
-                a: "Yes. Monthly and yearly plans cancel from your account settings. Cancellation stops the next renewal; your current paid period remains active through its end date. No refunds or credits are issued for the unused portion (see our Terms for the full no-refund policy and statutory exceptions).",
+                a: "Monthly and yearly billing is handled in Stripe Checkout. For billing help or a cancellation request, contact hello@playstorewizard.pro.",
               },
               {
-                q: "What counts as an 'app' on the Pro tier?",
-                a: "Unlimited apps with the same Play Console account. Each app has its own wizard state, listing, and asset library.",
-              },
-              {
-                q: "Do you offer student or open-source discounts?",
-                a: "Yes — open-source apps with a public repo get 50% off Pro. Students with a .edu email get 6 months of Pro free. Email hello@playstorewizard.pro.",
+                q: "What does Pro unlock?",
+                a: "Pro unlocks steps 7–12: Data Safety, target audience, privacy policy, pricing and countries, release planning, and final readiness review. The wizard prepares your launch details; you submit them in your own Google Play Console.",
               },
               {
                 q: "What's the refund policy?",
-                a: "All sales are final. We don't issue refunds, credits, or proration for unused time on monthly, yearly, or lifetime plans — including for forgotten cancellations or change of mind. The Free tier is unlimited so you can fully evaluate the product before paying. We honor refund requirements imposed by applicable law in your jurisdiction (e.g. statutory EU/UK cooling-off rights).",
+                a: "Review the Terms before purchasing. For a billing issue, contact hello@playstorewizard.pro with the email used at checkout.",
               },
               {
                 q: "Why is PayPal only shown for lifetime plans?",
