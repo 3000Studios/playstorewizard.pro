@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { TopNav } from "@/components/nav/top-nav";
 import { Footer } from "@/components/nav/footer";
 import { AuroraBackground } from "@/components/bg/aurora-background";
 import { AdSenseScript } from "@/components/adsense/google-adsense";
+import { ConsentBanner } from "@/components/consent/consent-banner";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE_NAME}`,
   },
   description:
-    "A guided publishing studio for Google Play. Compliance, listings, asset auto-resize, AI descriptions, one-click submit. Free to start.",
+    "A guided publishing studio for Google Play. Organize compliance, listings, assets, and launch details before submitting in Play Console. Free to start.",
   keywords: [
     "google play",
     "play store",
@@ -85,6 +87,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <head>
+        <Script id="consent-default" strategy="beforeInteractive">
+          {"window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{if(localStorage.getItem('psw-consent')==='granted'){gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});}}catch(e){}"}
+        </Script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <JsonLd data={[buildOrganizationLd(), buildSoftwareAppLd()]} />
@@ -112,6 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* AdSense library (no-op when unconfigured) */}
         <AdSenseScript />
+        <ConsentBanner />
       </body>
     </html>
   );
