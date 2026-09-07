@@ -29,20 +29,20 @@ export default function PrivacyPage() {
           <h3>1.3 Usage data</h3>
           <p>We collect basic anonymized analytics: page views, wizard completion rates, browser type, screen size. No personally identifying information is associated with these events.</p>
           <h3>1.4 Cookies</h3>
-          <p>We use a minimal set of essential cookies for authentication (when logged in) and a single first-party analytics cookie. We do not use third-party advertising cookies for behavioral targeting, except as set by Google AdSense — see Section 4.</p>
+          <p>We use a minimal set of essential cookies for authentication (when logged in) and to remember privacy choices. If Google AdSense is enabled after approval, its cookies and similar technologies are governed by the consent controls described in Section 4.</p>
           <h2>2. How we use your information</h2>
           <p>We use collected information solely to operate, maintain, and improve the Service. We do not sell user data. We do not share user data with third parties except as required to deliver the Service (payment processor, hosting provider) or to comply with legal obligations.</p>
           <h2>3. Data sent to AI providers</h2>
           <p>When you click &quot;Generate&quot; on an AI-powered field, the text you have typed (and only that text) is sent to Cloudflare Workers AI for processing. Cloudflare does not retain prompt data for model training under our service agreement. If you have configured a local Ollama endpoint, prompts go to your local machine instead and never leave your device.</p>
           <h2>4. Advertising (AdSense)</h2>
-          <p>Our content pages display ads via Google AdSense. Google may use cookies and similar technologies to serve ads based on your previous visits to our or other websites. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads">Google&apos;s ad settings</a>. EU/UK users will see a consent banner before any non-essential cookies are set.</p>
+          <p>If Google AdSense is enabled after site approval, Google may use cookies and similar technologies to serve ads. You can manage personalized advertising through <a href="https://www.google.com/settings/ads">Google&apos;s ad settings</a>. EU/UK users are shown a consent banner before non-essential storage is enabled.</p>
           <h2>4a. Third-party processors</h2>
           <p>We rely on the following sub-processors. Each handles only the data needed to perform its function and is bound by its own privacy policy:</p>
           <ul>
             <li><strong>Stripe, Inc.</strong> — card payments, subscription billing, webhook events.</li>
             <li><strong>PayPal Holdings, Inc.</strong> — lifetime-plan PayPal checkout.</li>
             <li><strong>Cloudflare, Inc.</strong> — hosting (Workers), DNS, edge cache, KV storage, Workers AI inference, abuse-prevention rate limiting.</li>
-            <li><strong>Google LLC</strong> — AdSense advertising on content pages (see Section 4).</li>
+            <li><strong>Google LLC</strong> — AdSense advertising, only if and when enabled on content pages (see Section 4).</li>
           </ul>
           <h2>5. Data retention</h2>
           <p>Wizard state remains in your browser indefinitely until you clear it. Account data is retained while your subscription is active and for 90 days after cancellation, then permanently deleted unless legally required to retain longer.</p>

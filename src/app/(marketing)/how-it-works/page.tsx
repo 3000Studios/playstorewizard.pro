@@ -9,7 +9,7 @@ import { ArrowRight, Rocket } from "lucide-react";
 
 export const metadata = pageMetadata({
   title: "How it works",
-  description: "The 12-step Playstore Wizard flow, explained. From app basics to one-click submit — with realistic timelines and zero guesswork.",
+  description: "The 12-step Playstore Wizard flow, explained. From app basics to a submission-ready launch plan for Play Console.",
   path: "/how-it-works",
 });
 

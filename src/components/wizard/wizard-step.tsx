@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useWizard } from "@/lib/store";
 import { STEPS, type StepDef, nextStep, prevStep } from "@/lib/steps";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { WizardPaywall } from "./wizard-paywall";
 
 import { StepAppInfo } from "./steps/app-info";
 import { StepBundle } from "./steps/bundle";
@@ -42,6 +43,10 @@ export function WizardStep({ step }: { step: StepDef }) {
   const Component = STEP_COMPONENTS[step.slug];
   const prev = prevStep(step.slug);
   const next = nextStep(step.slug);
+
+  if (tier === "free" && step.num >= 7) {
+    return <WizardPaywall stepNum={step.num} />;
+  }
 
   return (
     <Card>

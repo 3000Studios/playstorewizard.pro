@@ -12,7 +12,7 @@ import {
 
 export const metadata = pageMetadata({
   title: "Features",
-  description: "Every feature in Playstore Wizard — compliance auto-check, AI listings, asset auto-resize, Data Safety walkthrough, one-click publish, and more.",
+  description: "Every feature in Playstore Wizard — compliance auto-check, AI listings, asset auto-resize, Data Safety walkthrough, and launch planning.",
   path: "/features",
 });
 
@@ -48,11 +48,11 @@ const GROUPS = [
   },
   {
     name: "Publishing",
-    intro: "When you're done, click publish. The Play Developer API does the rest.",
+    intro: "Bring your release details together in one guided flow, then submit through your own Play Console account.",
     items: [
-      { icon: Send, title: "One-click submit", body: "Direct API integration. No more juggling the manual upload form." },
-      { icon: Workflow, title: "Scheduled releases", body: "Pro tier. Pick a launch time and have it submitted automatically." },
-      { icon: Zap, title: "Staged rollout control", body: "Pro tier. Set initial percentage, ramp curve, and halt criteria." },
+      { icon: Send, title: "Submission-ready checklist", body: "Review launch details before you submit through Play Console." },
+      { icon: Workflow, title: "Release planning", body: "Plan the release track and notes alongside your store listing." },
+      { icon: Zap, title: "Rollout preparation", body: "Keep rollout decisions and compliance checks in one launch plan." },
     ],
   },
 ];

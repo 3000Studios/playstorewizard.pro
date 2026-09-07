@@ -2,9 +2,8 @@
  * Pro tier feature gating and license management.
  *
  * Tiers:
- *   - free:    Single app, manual workflow, English-only AI
- *   - pro:     Unlimited apps, automation, multi-language, advanced AI ($9.99/mo)
- *   - studio:  Pro + team mode, white-label, agency tools ($49.99/mo)
+ *   - free:    The first six launch-planning steps
+ *   - pro:     The complete 12-step launch plan ($9.99/mo)
  *
  * License keys are HMAC-signed JWTs issued at checkout. The wizard validates
  * them client-side using a public key, with periodic server revalidation
@@ -76,16 +75,12 @@ export const TIERS: TierDef[] = [
     name: "Free",
     priceUsd: 0,
     billing: "monthly",
-    description: "Everything you need to publish your first app.",
+    description: "Start a launch plan with the first six guided steps.",
     features: [
-      "single-app",
       "ai-description-en",
       "asset-resize",
       "asset-feature-graphic-gen",
-      "manual-publish",
       "compliance-check",
-      "basic-stats",
-      "review-tracking",
     ],
   },
   {
@@ -93,31 +88,13 @@ export const TIERS: TierDef[] = [
     name: "Pro",
     priceUsd: 9.99,
     billing: "monthly",
-    description: "Built for indie developers shipping multiple apps.",
+    description: "Finish all 12 guided steps before you submit in Play Console.",
     features: [
-      "unlimited-apps",
       "ai-description-en",
-      "ai-description-multi-lang",
-      "ai-translate-listing",
-      "ai-review-replies",
-      "ai-screenshot-captions",
-      "ai-aso-keywords",
       "asset-resize",
-      "asset-device-frames",
       "asset-feature-graphic-gen",
-      "asset-screenshot-capture-emulator",
-      "manual-publish",
-      "auto-publish",
-      "scheduled-release",
-      "staged-rollout-control",
-      "multi-track-management",
       "compliance-check",
-      "compliance-monitoring",
-      "policy-change-alerts",
-      "basic-stats",
-      "review-tracking",
-      "keyword-ranking",
-      "ab-test-listings",
+      "manual-publish",
     ],
   },
   {
@@ -125,39 +102,13 @@ export const TIERS: TierDef[] = [
     name: "Studio",
     priceUsd: 49.99,
     billing: "monthly",
-    description: "For agencies and studios managing client apps.",
+    description: "A separate plan retained for existing customers.",
     features: [
-      // Includes everything in Pro
-      "unlimited-apps",
       "ai-description-en",
-      "ai-description-multi-lang",
-      "ai-translate-listing",
-      "ai-review-replies",
-      "ai-screenshot-captions",
-      "ai-aso-keywords",
-      "ai-aso-monitoring",
       "asset-resize",
-      "asset-device-frames",
       "asset-feature-graphic-gen",
-      "asset-screenshot-capture-emulator",
       "manual-publish",
-      "auto-publish",
-      "scheduled-release",
-      "staged-rollout-control",
-      "multi-track-management",
       "compliance-check",
-      "compliance-monitoring",
-      "policy-change-alerts",
-      "basic-stats",
-      "review-tracking",
-      "competitor-tracking",
-      "keyword-ranking",
-      "ab-test-listings",
-      // Studio-only
-      "team-mode",
-      "white-label",
-      "bulk-update",
-      "client-mode",
     ],
   },
 ];

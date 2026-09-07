@@ -18,7 +18,7 @@ export const STEPS: StepDef[] = [
   { num: 9,  slug: "privacy",         title: "Privacy policy",        short: "Privacy",   description: "Auto-generate a hostable privacy policy from your Data Safety answers." },
   { num: 10, slug: "pricing",         title: "Pricing & countries",   short: "Pricing",   description: "Set your price, see what Google takes, choose where to launch." },
   { num: 11, slug: "release",         title: "Release track",         short: "Release",   description: "Internal, closed, open, or production — with release notes." },
-  { num: 12, slug: "review",          title: "Review & submit",       short: "Review",    description: "Final compliance check, then submit to the Play Console." },
+  { num: 12, slug: "review",          title: "Review & launch plan",  short: "Review",    description: "Run a final compliance check before submitting in Play Console." },
 ];
 
 export function stepIndex(slug: string): number {

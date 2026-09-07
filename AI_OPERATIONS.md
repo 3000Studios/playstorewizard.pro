@@ -1,6 +1,6 @@
 # AI Operations
 
-This is the direct instruction file for ChatGPT/Codex, Gemini, and Grok. Canonical branch: `main`; canonical production repository: this repository.
+This is the direct instruction file for ChatGPT/Codex, Gemini, and Grok. Canonical branch: `main`; canonical production repository: this repository. Read `../AGENT_ACCESS_AND_AUTOMATION.md` before configuration, deployment, integration, or monetization work.
 
 Before changing code, inspect `AGENTS.md`, `README.md`, Git status/remote, package scripts, and Cloudflare configuration. Preserve unrelated changes. Make the smallest complete change, run relevant format/type/lint/test/production-build checks, then commit and push the validated change to `main`.
 

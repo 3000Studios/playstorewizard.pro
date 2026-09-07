@@ -1,9 +1,8 @@
 "use client";
 import { useWizard } from "@/lib/store";
 import { Badge } from "@/components/ui/primitives";
-import { Button } from "@/components/ui/button";
 import { checkCompliance } from "@/lib/compliance/checker";
-import { Send, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export function StepReview() {
   const w = useWizard();
@@ -69,10 +68,9 @@ export function StepReview() {
           </div>
         ))}
       </div>
-      <Button variant="aurora" size="lg" className="w-full" disabled={!report.summary.readyToSubmit}>
-        <Send className="h-4 w-4" />
-        {report.summary.readyToSubmit ? "Submit to Play Console" : "Fix blockers first"}
-      </Button>
+      <p className="rounded-lg border border-border bg-bg-2/50 px-4 py-3 text-xs text-text-muted">
+        Use the checklist above to resolve any blockers, then submit through your own Play Console account.
+      </p>
     </div>
   );
 }

@@ -31,7 +31,7 @@ export default function AboutPage() {
           </p>
           <h2>How we make money</h2>
           <p>The Free tier is genuinely free, forever — one app, no expiry, no credit card. We make money from the Pro tier (indie developers shipping multiple apps), the Studio tier (agencies managing client apps), and modest ad revenue on our content pages. We never sell or share user data, and we never use a free user as a stepping stone to extract a payment.</p>
-          <p>Our content pages (the homepage, features, FAQ, and guides) display advertising served by <strong>Google AdSense</strong>. Ads are selected by Google&apos;s systems based on page content and, where you&apos;ve consented, browsing history. We do not choose which specific ads appear. See our <a href="/privacy">Privacy Policy</a> for details on how Google uses data for ad personalization and how to opt out.</p>
+          <p>We may use modest advertising on content pages after Google approves the site for <strong>Google AdSense</strong>. When enabled, ads are selected by Google&apos;s systems and subject to the choices you make through our consent controls. See our <a href="/privacy">Privacy Policy</a> for details.</p>
           <h2>What we promise</h2>
           <p>The rules encoded in this tool stay current. When Google announces a policy change, the compliance engine updates within 7 days. When a rule is ambiguous, we err on the side of caution and tell you why. When you ask us a question, a human answers.</p>
           <h2>What we&apos;re not</h2>

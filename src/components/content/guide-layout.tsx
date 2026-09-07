@@ -17,7 +17,7 @@ interface GuideLayoutProps {
   midAdAfterSection?: number;
 }
 
-export function GuideLayout({ slug, children }: GuideLayoutProps) {
+export function GuideLayout({ slug, children, midAdSlot = AD_SLOTS.article }: GuideLayoutProps) {
   const guide = getGuide(slug);
   if (!guide) return null;
   const related = getRelatedGuides(slug, 3);
@@ -88,7 +88,7 @@ export function GuideLayout({ slug, children }: GuideLayoutProps) {
           <div className="prose-guide">{children}</div>
         </Reveal>
 
-        <InArticleAd slot="2345678901" className="my-12" />
+        <InArticleAd slot={midAdSlot} className="my-12" />
 
         <Reveal>
           <div className="mt-16 pt-8 border-t border-border">

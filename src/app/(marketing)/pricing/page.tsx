@@ -5,7 +5,7 @@ import { PricingClient } from "./pricing-client";
 
 export const metadata = pageMetadata({
   title: "Pricing",
-  description: "Free for your first app. Pro for unlimited apps and automation. Studio for agencies. Monthly, yearly, or lifetime pricing.",
+  description: "Start a free six-step Play Store launch plan. Pro unlocks the final six readiness steps before you submit in Play Console.",
   path: "/pricing",
 });
 
