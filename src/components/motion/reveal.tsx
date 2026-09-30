@@ -10,7 +10,7 @@ interface RevealProps extends React.HTMLAttributes<HTMLDivElement> {
   threshold?: number;
   /** Only run once (default). */
   once?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 export function Reveal({

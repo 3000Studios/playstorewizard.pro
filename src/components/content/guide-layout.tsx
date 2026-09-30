@@ -6,6 +6,7 @@ import { InArticleAd } from "@/components/adsense/google-adsense";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildArticleLd, buildBreadcrumbLd } from "@/lib/seo/metadata";
 import { getGuide, getRelatedGuides, type GuideMeta } from "@/lib/content/guides";
+import { AD_SLOTS } from "@/lib/adsense/slots";
 import { formatDate } from "@/lib/utils";
 
 interface GuideLayoutProps {

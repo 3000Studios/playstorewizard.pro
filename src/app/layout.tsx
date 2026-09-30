@@ -5,6 +5,7 @@ import { TopNav } from "@/components/nav/top-nav";
 import { Footer } from "@/components/nav/footer";
 import { AuroraBackground } from "@/components/bg/aurora-background";
 import { AdSenseScript } from "@/components/adsense/google-adsense";
+import { ConsentBanner } from "@/components/adsense/consent-banner";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildOrganizationLd, buildSoftwareAppLd } from "@/lib/seo/metadata";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/utils";
