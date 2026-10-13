@@ -1,32 +1,15 @@
 "use client";
 
-import Script from "next/script";
 import * as React from "react";
 
 const ADSENSE_CLIENT_ID =
   process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-5800977493749262";
 
-/**
- * Head script that loads the AdSense library. Mount once in the root layout.
- * No-ops in development unless explicitly enabled.
- */
-export function AdSenseScript() {
-  if (!ADSENSE_CLIENT_ID || ADSENSE_CLIENT_ID === "ca-pub-0000000000000000") {
-    return null;
-  }
-  return (
-    <>
-      <Script
-        id="adsbygoogle-js"
-        async
-        strategy="afterInteractive"
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
-        crossOrigin="anonymous"
-      />
-      {/* AdSense ownership meta tag is added in layout <head> directly via metadata.other */}
-    </>
-  );
-}
+// The AdSense library itself is loaded by a plain executing <script> tag in
+// the root layout's <head> (src/app/layout.tsx). It used to load here via
+// next/script with strategy="afterInteractive", which only emitted a
+// <link rel="preload"> in the served HTML — no executing loader tag — so
+// Auto ads never loaded for Google's crawler.
 
 declare global {
   interface Window {
