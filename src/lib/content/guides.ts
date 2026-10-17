@@ -191,6 +191,40 @@ export const GUIDES: GuideMeta[] = [
     updatedAt: "2026-05-13",
     tags: ["alternative billing", "fees", "monetization", "play billing"],
   },
+
+  {
+    slug: "reading-a-policy-rejection",
+    title: "App Rejected? How to Read a Play Policy Rejection and Appeal It",
+    summary:
+      "A rejection email is not the end of your app. Here is how to decode what Google actually flagged, decide between fixing and appealing, and submit an appeal that addresses the real issue.",
+    category: "Compliance",
+    readingTimeMin: 8,
+    publishedAt: "2026-10-17",
+    updatedAt: "2026-10-17",
+    tags: ["rejection", "appeal", "policy", "enforcement", "play console"],
+  },
+  {
+    slug: "testing-tracks-explained",
+    title: "Internal, Closed, and Open Testing: Which Play Track to Use When",
+    summary:
+      "Google Play gives you three testing tracks, and using the wrong one wastes weeks. What each track is for, who can join, and how releases move from internal builds to production.",
+    category: "Submission",
+    readingTimeMin: 8,
+    publishedAt: "2026-10-17",
+    updatedAt: "2026-10-17",
+    tags: ["testing tracks", "internal testing", "closed testing", "open testing", "beta"],
+  },
+  {
+    slug: "staged-rollouts-and-version-codes",
+    title: "Staged Rollouts and Version Codes: Shipping Updates Without Breaking Everyone",
+    summary:
+      "Version codes decide who can update; staged rollouts decide how fast. How the two mechanics work together, how to halt a bad release, and the mistakes that strand users on old builds.",
+    category: "Submission",
+    readingTimeMin: 8,
+    publishedAt: "2026-10-17",
+    updatedAt: "2026-10-17",
+    tags: ["staged rollout", "version code", "release management", "updates", "android vitals"],
+  },
 ];
 
 export function getGuide(slug: string): GuideMeta | undefined {
