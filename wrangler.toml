@@ -25,6 +25,10 @@ id = "2d3f19cd03224025a726d5dd75283c80"
 binding = "SITE_EVENTS"
 id = "6adcafb024ad410dabc054c5cc7618bd"
 
+[[kv_namespaces]]
+binding = "NEXT_INC_CACHE_KV"
+id = "18001a204f2540b596bfb9328e4b69d2"
+
 [[services]]
 binding = "WORKER_SELF_REFERENCE"
 service = "playstorewizard-pro"
